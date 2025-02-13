@@ -42,6 +42,6 @@ public class TodoDTO {
 
   @Override
   public String toString() {
-    return "TodoDTO [no=" + no + ", title='" + title + + '\'' + ", dueDate=" + dueDate + ", finished=" + finished + "]";
+    return "TodoDTO [no=" + no + ", title='" + title + '\'' + ", dueDate=" + dueDate + ", finished=" + finished + "]";
   }
 }
