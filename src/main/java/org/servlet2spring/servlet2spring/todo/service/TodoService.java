@@ -24,6 +24,8 @@ public enum TodoService {
     todoDto.setTitle("Sample Todo");
     todoDto.setDueDate(LocalDate.now());
     todoDto.setFinished(true);
+
+    return todoDto;
   }
 
   // 10개의 TodoDTO 객체를 만들어서 반환
