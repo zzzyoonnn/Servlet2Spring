@@ -17,6 +17,15 @@ public enum TodoService {
     System.out.println("DEBUG... " + todoDTO);
   }
 
+  // 특정한 번호 조회 기능
+  public TodoDTO get(Long no) {
+    TodoDTO todoDto = new TodoDTO();
+    todoDto.setNo(no);
+    todoDto.setTitle("Sample Todo");
+    todoDto.setDueDate(LocalDate.now());
+    todoDto.setFinished(true);
+  }
+
   // 10개의 TodoDTO 객체를 만들어서 반환
   public List<TodoDTO> getList() {
     return IntStream.range(0, 10).mapToObj(i -> {
