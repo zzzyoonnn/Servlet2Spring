@@ -3,8 +3,22 @@ package org.servlet2spring.servlet2spring.todo.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import lombok.Cleanup;
 
 public class TodoDAO {
+
+  public String getTime2() throws Exception {
+
+    @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+    @Cleanup PreparedStatement preparedStatement = connection.prepareStatement("select now()");
+    @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
+
+    resultSet.next();
+
+    String now = resultSet.getString(1);
+
+    return now;
+  }
 
   public String getTime() {
 
