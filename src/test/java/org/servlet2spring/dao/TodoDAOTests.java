@@ -1,6 +1,7 @@
 package org.servlet2spring.dao;
 
 import java.time.LocalDate;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.servlet2spring.servlet2spring.todo.dao.TodoDAO;
@@ -13,6 +14,13 @@ public class TodoDAOTests {
   @BeforeEach
   public void ready() {
     todoDAO = new TodoDAO();
+  }
+
+  @Test
+  public void testSelectAll() throws Exception {
+    List<TodoVO> list = todoDAO.selectAll();
+
+    list.forEach(vo -> System.out.println(vo));
   }
 
   @Test
