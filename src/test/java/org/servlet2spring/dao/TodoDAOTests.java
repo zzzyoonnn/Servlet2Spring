@@ -17,6 +17,18 @@ public class TodoDAOTests {
   }
 
   @Test
+  public void testUpdateOne() throws Exception {
+    TodoVO todoVO = TodoVO.builder()
+            .no(8L)
+            .title("test title(edited)")
+            .dueDate(LocalDate.of(1999,12,31))
+            .finished(true)
+            .build();
+
+    todoDAO.updateOne(todoVO);
+  }
+
+  @Test
   public void testSelectOne() throws Exception {
     Long no = 1L;   // 반드시 존재하는 번호 사용
 
