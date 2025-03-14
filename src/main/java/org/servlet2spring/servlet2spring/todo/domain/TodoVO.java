@@ -1,9 +1,9 @@
 package org.servlet2spring.servlet2spring.todo.domain;
 
-import lombok.Getter;
+import java.time.LocalDate;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.ToString;
-import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -14,7 +14,7 @@ public class TodoVO {
 
   private String title;
 
-  private LocalDateTime dueDate;
+  private LocalDate dueDate;
 
   private boolean finished;
 
