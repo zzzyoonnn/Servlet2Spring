@@ -11,6 +11,27 @@ import org.servlet2spring.servlet2spring.todo.domain.TodoVO;
 
 public class TodoDAO {
 
+  public TodoVO selectOne(Long no) throws Exception {
+    String sql = "select * from tbl_todo where no = ?";
+
+    @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+    @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+    preparedStatement.setLong(1, no);
+
+    @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
+
+    resultSet.next();
+    TodoVO vo = TodoVO.builder()
+            .no(resultSet.getLong("no"))
+            .title(resultSet.getString("title"))
+            .dueDate(resultSet.getDate("dueDate").toLocalDate())
+            .finished(resultSet.getBoolean("finished"))
+            .build();
+
+    return vo;
+  }
+
   public List<TodoVO> selectAll() throws Exception {
     String sql = "select * from tbl_todo";
 
