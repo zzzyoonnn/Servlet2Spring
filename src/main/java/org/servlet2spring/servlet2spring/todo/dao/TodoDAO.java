@@ -11,6 +11,20 @@ import org.servlet2spring.servlet2spring.todo.domain.TodoVO;
 
 public class TodoDAO {
 
+  public void updateOne(TodoVO todoVO) throws Exception {
+    String sql = "update tbl_todo set title = ?, dueDate = ?, finished = ? where no = ?";
+
+    @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+    @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+    preparedStatement.setString(1, todoVO.getTitle());
+    preparedStatement.setDate(2, Date.valueOf(todoVO.getDueDate()));
+    preparedStatement.setBoolean(3, todoVO.isFinished());
+    preparedStatement.setLong(4, todoVO.getNo());
+
+    preparedStatement.executeUpdate();
+  }
+
   public TodoVO selectOne(Long no) throws Exception {
     String sql = "select * from tbl_todo where no = ?";
 
