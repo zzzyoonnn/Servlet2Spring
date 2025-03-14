@@ -11,6 +11,17 @@ import org.servlet2spring.servlet2spring.todo.domain.TodoVO;
 
 public class TodoDAO {
 
+  public void deleteOne(Long no) throws Exception {
+    String sql = "delete from tbl_todo where no = ?";
+
+    @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+    @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+    preparedStatement.setLong(1, no);
+
+    preparedStatement.executeUpdate();
+  }
+
   public void updateOne(TodoVO todoVO) throws Exception {
     String sql = "update tbl_todo set title = ?, dueDate = ?, finished = ? where no = ?";
 
