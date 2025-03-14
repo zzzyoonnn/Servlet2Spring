@@ -17,6 +17,15 @@ public class TodoDAOTests {
   }
 
   @Test
+  public void testSelectOne() throws Exception {
+    Long no = 1L;   // 반드시 존재하는 번호 사용
+
+    TodoVO vo = todoDAO.selectOne(no);
+
+    System.out.println(vo);
+  }
+
+  @Test
   public void testSelectAll() throws Exception {
     List<TodoVO> list = todoDAO.selectAll();
 
