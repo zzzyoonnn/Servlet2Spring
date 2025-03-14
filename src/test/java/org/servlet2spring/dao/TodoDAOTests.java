@@ -17,6 +17,13 @@ public class TodoDAOTests {
   }
 
   @Test
+  public void testDeleteOne() throws Exception {
+    Long no = 9L;
+
+    todoDAO.deleteOne(no);
+  }
+
+  @Test
   public void testUpdateOne() throws Exception {
     TodoVO todoVO = TodoVO.builder()
             .no(8L)
