@@ -17,8 +17,8 @@ public class TodoReadController extends HttpServlet {
     System.out.println("/todo/read");
 
     Long no = Long.parseLong(req.getParameter("no"));
-    //TodoDTO todoDTO = TodoService.INSTANCE.get(no);
-    //req.setAttribute("todoDTO", todoDTO);
+    TodoDTO todoDTO = TodoService.INSTANCE.get(no);
+    req.setAttribute("todoDTO", todoDTO);
     req.getRequestDispatcher("/WEB-INF/todo/read.jsp").forward(req, resp);
   }
 }
