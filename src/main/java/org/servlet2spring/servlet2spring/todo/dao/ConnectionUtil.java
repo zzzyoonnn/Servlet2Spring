@@ -12,7 +12,7 @@ public enum ConnectionUtil {
 
   ConnectionUtil() {
     HikariConfig config = new HikariConfig();
-    config.setDriverClassName("com.mysql.jdbc.Driver");
+    config.setDriverClassName("com.mysql.cj.jdbc.Driver");
     config.setJdbcUrl("jdbc:mysql://localhost:3306/s2s");
     config.setUsername("s2s");
     config.setPassword("s2s");
