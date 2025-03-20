@@ -6,9 +6,9 @@
         </Console>
     </Appenders>
 
-    <Logger>
+    <Loggers>
         <Root level="info">
             <AppenderRef ref = "Console"/>
         </Root>
-    </Logger>
+    </Loggers>
 </Configuration>
