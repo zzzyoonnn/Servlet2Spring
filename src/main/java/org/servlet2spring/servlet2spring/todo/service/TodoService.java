@@ -1,15 +1,17 @@
 package org.servlet2spring.servlet2spring.todo.service;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.servlet2spring.servlet2spring.todo.dao.TodoDAO;
 import org.servlet2spring.servlet2spring.todo.domain.TodoVO;
 import org.servlet2spring.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.servlet2spring.todo.util.MapperUtil;
 
+@Log4j2
 public enum TodoService {
   INSTANCE;
 
@@ -21,35 +23,24 @@ public enum TodoService {
     modelMapper = MapperUtil.INSTANCE.getModelMapper();
   }
 
-  // 특정한 번호 조회 기능
-  public TodoDTO get(Long no) {
-    TodoDTO todoDto = new TodoDTO();
-    todoDto.setNo(no);
-    todoDto.setTitle("Sample Todo");
-    todoDto.setDueDate(LocalDate.now());
-    todoDto.setFinished(true);
-
-    return todoDto;
-  }
-
   public void register(TodoDTO todoDTO) throws Exception {
     TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
 
-    System.out.println("todoVO: " + todoVO);
-
-    todoDAO.insert(todoVO);
+    log.info(todoVO);
   }
 
-  // 10개의 TodoDTO 객체를 만들어서 반환
-  public List<TodoDTO> getList() {
-    return IntStream.range(0, 10).mapToObj(i -> {
-      TodoDTO dto = new TodoDTO();
-      dto.setNo((long) i);
-      dto.setTitle("Todo : " + i);
-      dto.setDueDate(LocalDate.now());
+  // 목록 기능 구현
+  public List<TodoDTO> listAll() throws Exception {
+    List<TodoVO> voList = todoDAO.selectAll();
 
-      return dto;
-    }).collect(Collectors.toList());
+    log.info("voList...");
+
+    log.info(voList);
+
+    List<TodoDTO> dtoList = voList.stream()
+            .map(vo -> modelMapper.map(vo, TodoDTO.class))
+            .collect(Collectors.toList());
+
+    return dtoList;
   }
-
 }
