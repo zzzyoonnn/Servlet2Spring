@@ -27,6 +27,7 @@ public enum TodoService {
     TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
 
     log.info(todoVO);
+    todoDAO.insert(todoVO);
   }
 
   // 목록 기능 구현
