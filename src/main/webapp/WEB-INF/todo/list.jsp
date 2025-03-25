@@ -10,13 +10,13 @@
 
 <html>
 <head>
-    <title>List Page</title>
+    <title>Todo List</title>
 </head>
 <body>
-<h1>List Page</h1>
+<h1>Todo List</h1>
 
 <ul>
-    <c:forEach var="dto" items="${todoList}">
+    <c:forEach var="dto" items="${dtoList}">
         <li>${dto}</li>
     </c:forEach>
 </ul>
