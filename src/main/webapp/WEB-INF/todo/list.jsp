@@ -17,11 +17,14 @@
 
 <ul>
     <c:forEach var="dto" items="${dtoList}">
-        <li>${dto}</li>
+        <li>
+            <span><a href="/todo/read?no=${dto.no}">${dto.no}</a></span>
+            <span>${dto.title}</span>
+            <span>${dto.dueDate}</span>
+            <span>${dto.finished? "DONE": "NOT FINISHED"}</span>
+        </li>
     </c:forEach>
 </ul>
-
-${todoList}
 
 </body>
 </html>
