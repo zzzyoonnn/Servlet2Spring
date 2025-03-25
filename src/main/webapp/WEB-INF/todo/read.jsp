@@ -8,12 +8,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Read</title>
+    <title>Todo Read</title>
 </head>
 <body>
-<div>${todoDTO.no}</div>
-<div>${todoDTO.title}</div>
-<div>${todoDTO.dueDate}</div>
-<div>${todoDTO.finished}</div>
+<div>
+    <input type="text" name="no" value="${todoDTO.no}" readonly>
+</div>
+<div>
+    <input type="text" name="title" value="${todoDTO.title}" readonly>
+</div>
+<div>
+    <input type="date" name="dueDate" value="${todoDTO.dueDate}">
+</div>
+<div>
+    <a href="/todo/modify?no=${todoDTO.no}">Modify/Remove</a>
+    <a href="/todo/list">List</a>
+</div>
 </body>
 </html>
