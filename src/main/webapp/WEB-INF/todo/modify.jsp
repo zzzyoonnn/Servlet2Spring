@@ -32,7 +32,7 @@
 </form>
 
 <form id="form2" action="/todo/remove" method="post">
-    <input type="hidden" name="no" value="${dto.no}" readonly>
+    <input type="hidden" name="no" value="${todoDTO.no}" readonly>
     <div>
         <button type="submit">Remove</button>
     </div>
