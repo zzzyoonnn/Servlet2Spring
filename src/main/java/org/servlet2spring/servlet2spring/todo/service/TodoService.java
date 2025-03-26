@@ -23,6 +23,14 @@ public enum TodoService {
     modelMapper = MapperUtil.INSTANCE.getModelMapper();
   }
 
+  // 수정 기능 구현
+  public void modify(TodoDTO todoDTO) throws Exception {
+    log.info("todoDTO: " + todoDTO);
+
+    TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
+    todoDAO.updateOne(todoVO);
+  }
+
   // 조회 기능 구현
   public TodoDTO get(Long no) throws Exception {
     log.info("no: " + no);
