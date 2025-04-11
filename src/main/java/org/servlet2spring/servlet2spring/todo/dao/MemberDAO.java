@@ -8,6 +8,20 @@ import org.servlet2spring.servlet2spring.todo.domain.MemberVO;
 
 public class MemberDAO {
 
+  // 자동 로그인 기능
+  public void updateUuid(String mid, String uuid) throws Exception {
+
+    String sql = "update tbl_member set uuid = ? where mid = ?";
+
+    @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+    @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+    preparedStatement.setString(1, uuid);
+    preparedStatement.setString(2, mid);
+
+    preparedStatement.executeUpdate();
+  }
+
   public MemberVO getWithPassword(String mid, String mpw) throws Exception {
 
     String query = "select mid, mpw, mname from tbl_member where mid = ? and mpw = ?";
