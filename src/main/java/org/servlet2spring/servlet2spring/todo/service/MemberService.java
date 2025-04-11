@@ -18,6 +18,12 @@ public enum MemberService {
     memberDAO = new MemberDAO();
     modelMapper = MapperUtil.INSTANCE.getModelMapper();
   }
+  
+  // 자동 로그인 기능
+  public void updateUuid(String mid, String uuid) throws Exception {
+
+    memberDAO.updateUuid(mid, uuid);
+  }
 
   public MemberDTO login(String mid, String mpw) throws Exception {
 
