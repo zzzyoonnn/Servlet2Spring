@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.UUID;
 import lombok.extern.java.Log;
 import org.servlet2spring.servlet2spring.todo.dto.MemberDTO;
 import org.servlet2spring.servlet2spring.todo.service.MemberService;
@@ -21,6 +22,13 @@ public class LoginController extends HttpServlet {
 
     String mid = req.getParameter("mid");
     String mpw = req.getParameter("mpw");
+
+    String auto = req.getParameter("auto");
+    boolean rememberMe = auto != null && auto.equals("on");
+
+    if (rememberMe) {
+      String uuid = UUID.randomUUID().toString();
+    }
 
     try {
       MemberDTO memberDTO = MemberService.INSTANCE.login(mid, mpw);
