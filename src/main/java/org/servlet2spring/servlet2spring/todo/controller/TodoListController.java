@@ -1,5 +1,7 @@
 package org.servlet2spring.servlet2spring.todo.controller;
 
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +21,10 @@ public class TodoListController extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     log.info("todoList...");
+
+    ServletContext servletContext = req.getServletContext();
+
+    log.info("appName: " + servletContext.getAttribute("appName"));
 
     try {
       List<TodoDTO> dtoList = todoService.listAll();
