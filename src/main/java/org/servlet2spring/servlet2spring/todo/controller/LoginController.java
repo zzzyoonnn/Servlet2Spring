@@ -2,6 +2,7 @@ package org.servlet2spring.servlet2spring.todo.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,10 +27,6 @@ public class LoginController extends HttpServlet {
     String auto = req.getParameter("auto");
     boolean rememberMe = auto != null && auto.equals("on");
 
-    if (rememberMe) {
-      String uuid = UUID.randomUUID().toString();
-    }
-
     try {
       MemberDTO memberDTO = MemberService.INSTANCE.login(mid, mpw);
 
@@ -38,6 +35,12 @@ public class LoginController extends HttpServlet {
 
         MemberService.INSTANCE.updateUuid(mid, uuid);
         memberDTO.setUuid(uuid);
+
+        Cookie rememberCookie = new Cookie("remember-me", uuid);
+        rememberCookie.setMaxAge(60 * 60 * 24 * 7); // 1 week
+        rememberCookie.setPath("/");
+
+        resp.addCookie(rememberCookie);
       }
 
       HttpSession session = req.getSession();
