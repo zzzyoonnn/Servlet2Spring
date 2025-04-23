@@ -96,6 +96,13 @@
         </dependency>
 
 
+        <!-- Spring Core -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>6.2.3</version>
+        </dependency>
+
     </dependencies>
 
 </project>
