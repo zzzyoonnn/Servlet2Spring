@@ -1,9 +1,9 @@
 package org.servlet2spring.servlet2spring.springSample;
 
-import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-@Primary
 @Repository
+@Qualifier("event")
 public class SampleEventDAOImpl implements SampleDAO{
 }
