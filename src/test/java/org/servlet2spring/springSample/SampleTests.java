@@ -1,5 +1,7 @@
 package org.servlet2spring.springSample;
 
+import java.sql.Connection;
+import javax.sql.DataSource;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,10 +14,23 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @Log4j2
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
-public class SampleTest {
+public class SampleTests {
 
   @Autowired
   private SampleService sampleService;
+
+  @Autowired
+  private DataSource dataSource;
+
+  @Test
+  public void testConnection() throws Exception {
+
+    Connection connection = dataSource.getConnection();
+    log.info(connection);
+    Assertions.assertNotNull(connection);
+
+    connection.close();
+  }
 
   @Test
   public void testService1() {
