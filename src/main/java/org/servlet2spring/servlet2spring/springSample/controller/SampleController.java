@@ -1,5 +1,6 @@
 package org.servlet2spring.servlet2spring.springSample.controller;
 
+import java.time.LocalDate;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,5 +23,11 @@ public class SampleController {
     log.info("ex1...");
     log.info("name:" + name);
     log.info("age:" + age);
+  }
+
+  @GetMapping("/ex2")
+  public void ex2(@RequestParam("dueDate") LocalDate dueDate) {
+    log.info("ex2...");
+    log.info("dueDate:" + dueDate);
   }
 }
