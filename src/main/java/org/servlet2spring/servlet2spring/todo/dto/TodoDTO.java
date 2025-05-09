@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Builder
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class TodoDTO {
@@ -19,5 +21,7 @@ public class TodoDTO {
   private LocalDate dueDate;
 
   private boolean finished;
+
+  private String writer;
 
 }
