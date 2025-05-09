@@ -12,9 +12,14 @@ import java.time.format.DateTimeFormatter;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.servlet2spring.todo.service.TodoService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Log4j2
-@WebServlet(name = "todoRegisterController", value = "/todo/register")
+@Controller
+@RequestMapping("/todo")
+//@WebServlet(name = "todoRegisterController", value = "/todo/register")
 public class TodoRegisterController extends HttpServlet {
 
   private TodoService todoService = TodoService.INSTANCE;
@@ -43,22 +48,28 @@ public class TodoRegisterController extends HttpServlet {
     req.getRequestDispatcher("/WEB-INF/todo/register.jsp").forward(req, resp);
   }
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    TodoDTO todoDTO = TodoDTO.builder()
-            .title(req.getParameter("title"))
-            .dueDate(LocalDate.parse(req.getParameter("dueDate"), DATEFORMATTER))
-            .build();
-
-    log.info("/todo/register POST...");
+  @PostMapping("/register")
+  public void registerPost(TodoDTO todoDTO) {
+    log.info("POST todo register...");
     log.info(todoDTO);
-
-    try {
-      todoService.register(todoDTO);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    resp.sendRedirect("/todo/list");
   }
+
+//  @Override
+//  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//    TodoDTO todoDTO = TodoDTO.builder()
+//            .title(req.getParameter("title"))
+//            .dueDate(LocalDate.parse(req.getParameter("dueDate"), DATEFORMATTER))
+//            .build();
+//
+//    log.info("/todo/register POST...");
+//    log.info(todoDTO);
+//
+//    try {
+//      todoService.register(todoDTO);
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//    }
+//
+//    resp.sendRedirect("/todo/list");
+//  }
 }
