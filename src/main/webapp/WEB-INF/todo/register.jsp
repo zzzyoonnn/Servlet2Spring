@@ -5,6 +5,8 @@
   Time: 5:28 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -13,10 +15,16 @@
 <body>
 <form action = "/todo/register" method = "post">
     <div>
-        <input type="text" name="title" placeholder="INSERT TITLE">
+        Title: <input type="text" name="title">
     </div>
     <div>
-        <input type="date" name="dueDate">
+        DueDate: <input type="date" name="dueDate" value="2025-05-09">
+    </div>
+    <div>
+        Writer: <input type="text" name="writer">
+    </div>
+    <div>
+        Finished: <input type="checkbox" name="finished">
     </div>
     <div>
         <button type="reset">RESET</button>
