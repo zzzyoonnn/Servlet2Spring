@@ -55,10 +55,10 @@ public class SampleController {
   @GetMapping("/ex6")
   public String ex6(RedirectAttributes redirectAttributes) {
 
-    redirectAttributes.addAttribute("message", "ABC");
+    redirectAttributes.addAttribute("name", "ABC");
     redirectAttributes.addFlashAttribute("result", "success");
 
-    return "redirect:/ex6";
+    return "redirect:/ex7";
   }
 
   @GetMapping("/ex7")
