@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Log4j2
 @Controller
@@ -46,8 +47,22 @@ public class SampleController {
     log.info("ex4...");
   }
 
-  @GetMapping("ex5")
+  @GetMapping("/ex5")
   public void ex5(@ModelAttribute("dto") TodoDTO todoDTO, Model model) {
     log.info(todoDTO);
+  }
+
+  @GetMapping("/ex6")
+  public String ex6(RedirectAttributes redirectAttributes) {
+
+    redirectAttributes.addAttribute("message", "ABC");
+    redirectAttributes.addFlashAttribute("result", "success");
+
+    return "redirect:/ex6";
+  }
+
+  @GetMapping("/ex7")
+  public void ex7() {
+
   }
 }
