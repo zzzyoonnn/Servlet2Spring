@@ -62,7 +62,9 @@ public class SampleController {
   }
 
   @GetMapping("/ex7")
-  public void ex7() {
-
+  public void ex7(@RequestParam("p1") String p1, @RequestParam("p2") int p2) {
+    log.info("p1..." + p1);
+    log.info("p2..." + p2);
   }
+
 }
