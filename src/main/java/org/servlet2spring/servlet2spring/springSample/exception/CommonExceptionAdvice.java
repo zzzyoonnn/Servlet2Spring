@@ -11,7 +11,7 @@ public class CommonExceptionAdvice {
 
   @ResponseBody
   @ExceptionHandler(NumberFormatException.class)
-  public String exceptionHandler(NumberFormatException numberFormatException) {
+  public String exceptionNumber(NumberFormatException numberFormatException) {
     log.error("---------------------------------");
     log.error(numberFormatException.getMessage());
 
