@@ -1,4 +1,4 @@
-package org.servlet2spring.servlet2spring.examples.springSample.mapper;
+package org.servlet2spring.servlet2spring.todo.mapper;
 
 import org.apache.ibatis.annotations.Select;
 
