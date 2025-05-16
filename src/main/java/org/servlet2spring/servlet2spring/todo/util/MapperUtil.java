@@ -3,6 +3,7 @@ package org.servlet2spring.servlet2spring.todo.util;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
+/*
 public enum MapperUtil {
   INSTANCE;
 
@@ -20,3 +21,4 @@ public enum MapperUtil {
     return modelMapper;
   }
 }
+*/
