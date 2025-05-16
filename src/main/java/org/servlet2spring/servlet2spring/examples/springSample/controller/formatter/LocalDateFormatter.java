@@ -1,4 +1,4 @@
-package org.servlet2spring.servlet2spring.springSample.controller.formatter;
+package org.servlet2spring.servlet2spring.examples.springSample.controller.formatter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

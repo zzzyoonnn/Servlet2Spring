@@ -1,4 +1,4 @@
-package org.servlet2spring.servlet2spring.springSample.exception;
+package org.servlet2spring.servlet2spring.examples.springSample.exception;
 
 import java.util.Arrays;
 import lombok.extern.log4j.Log4j2;

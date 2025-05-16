@@ -1,4 +1,4 @@
-package org.servlet2spring.servlet2spring;
+package org.servlet2spring.servlet2spring.examples;
 
 import java.io.*;
 import jakarta.servlet.http.*;

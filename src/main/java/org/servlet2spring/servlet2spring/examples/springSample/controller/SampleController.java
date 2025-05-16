@@ -1,4 +1,4 @@
-package org.servlet2spring.servlet2spring.springSample.controller;
+package org.servlet2spring.servlet2spring.examples.springSample.controller;
 
 import java.time.LocalDate;
 import lombok.extern.log4j.Log4j2;

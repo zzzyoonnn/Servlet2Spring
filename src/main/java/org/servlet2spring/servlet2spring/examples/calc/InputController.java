@@ -1,4 +1,4 @@
-package org.servlet2spring.servlet2spring.calc;
+package org.servlet2spring.servlet2spring.examples.calc;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package org.servlet2spring.servlet2spring.springSample;
+package org.servlet2spring.servlet2spring.examples.springSample;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

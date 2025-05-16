@@ -1,10 +1,10 @@
-package org.servlet2spring.springSample.mapper;
+package org.servlet2spring.exampleTests.springSample.mapper;
 
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.servlet2spring.servlet2spring.springSample.mapper.TimeMapper;
-import org.servlet2spring.servlet2spring.springSample.mapper.TimeMapper2;
+import org.servlet2spring.servlet2spring.examples.springSample.mapper.TimeMapper;
+import org.servlet2spring.servlet2spring.examples.springSample.mapper.TimeMapper2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
