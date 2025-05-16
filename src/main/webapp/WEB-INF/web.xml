@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>helloServlet</servlet-name>
-        <servlet-class>org.servlet2spring.servlet2spring.HelloServlet</servlet-class>
+        <servlet-class>org.servlet2spring.servlet2spring.examples.HelloServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -44,7 +44,6 @@
     <servlet-mapping>
         <servlet-name>appServlet</servlet-name>
         <url-pattern>/</url-pattern>
-        <url-pattern></url-pattern>
     </servlet-mapping>
 
 </web-app>
