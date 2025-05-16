@@ -151,6 +151,13 @@
             <artifactId>spring-tx</artifactId>
             <version>6.2.3</version>
         </dependency>
+
+        <!-- hibernate-validator -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.1.Final</version>
+        </dependency>
     </dependencies>
 
 </project>
