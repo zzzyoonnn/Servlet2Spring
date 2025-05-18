@@ -15,11 +15,9 @@ import lombok.ToString;
 public class TodoVO {
 
   private Long no;
-
   private String title;
-
   private LocalDate dueDate;
-
+  private String writer;
   private boolean finished;
 
 }
