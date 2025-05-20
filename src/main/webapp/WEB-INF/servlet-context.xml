@@ -17,14 +17,14 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <context:component-scan base-package="org.servlet2spring.servlet2spring.examples.springSample.controller" />
-    <context:component-scan base-package="org.servlet2spring.servlet2spring.todo.controller" />
+    <context:component-scan base-package="org.servlet2spring.examples.springSample.controller" />
+    <context:component-scan base-package="org.servlet2spring.todo.controller" />
 
     <!-- Formatter 적용 -->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="formatters">
             <set>
-                <bean class="org.servlet2spring.servlet2spring.examples.springSample.controller.formatter.LocalDateFormatter"/>
+                <bean class="org.servlet2spring.examples.springSample.controller.formatter.LocalDateFormatter"/>
             </set>
         </property>
     </bean>

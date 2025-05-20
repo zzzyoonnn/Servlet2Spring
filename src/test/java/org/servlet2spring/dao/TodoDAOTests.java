@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.servlet2spring.servlet2spring.todo.dao.TodoDAO;
-import org.servlet2spring.servlet2spring.todo.domain.TodoVO;
+import org.servlet2spring.todo.dao.TodoDAO;
+import org.servlet2spring.todo.domain.TodoVO;
 
 public class TodoDAOTests {
 

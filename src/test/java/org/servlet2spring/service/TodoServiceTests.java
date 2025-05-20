@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.servlet2spring.servlet2spring.todo.dto.TodoDTO;
-import org.servlet2spring.servlet2spring.todo.service.TodoService;
+import org.servlet2spring.todo.dto.TodoDTO;
+import org.servlet2spring.todo.service.TodoService;
 
 @Log4j2
 public class TodoServiceTests {

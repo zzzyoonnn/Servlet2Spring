@@ -33,6 +33,6 @@
         <property name="mapperLocations" value="classpath:/mappers/**/*.xml" />
     </bean>
 
-    <mybatis:scan base-package="org.servlet2spring.servlet2spring.todo.mapper"/>
+    <mybatis:scan base-package="org.servlet2spring.todo.mapper"/>
 
 </beans>

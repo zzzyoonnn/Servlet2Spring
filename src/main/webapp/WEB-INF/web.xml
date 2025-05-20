@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>helloServlet</servlet-name>
-        <servlet-class>org.servlet2spring.servlet2spring.examples.HelloServlet</servlet-class>
+        <servlet-class>org.servlet2spring.examples.HelloServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
