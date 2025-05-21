@@ -7,8 +7,22 @@
     </Appenders>
 
     <Loggers>
-        <Root level="info">
-            <AppenderRef ref = "console"/>
+        <Root level="info" additivity="false">
+            <AppenderRef ref="Console"/>
         </Root>
+
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+
+        <Logger name="org.servlet2spring" level="INFO" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+
+        <Logger name="org.servlet2spring.todo.mapper" level="TRACE" additivity="false">
+            <AppenderRef ref="Console" />
+        </Logger>
+
     </Loggers>
+
 </Configuration>
