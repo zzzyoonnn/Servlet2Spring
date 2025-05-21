@@ -10,13 +10,13 @@ import org.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.todo.util.MapperUtil;
 
 @Log4j2
-public enum TodoService {
+public enum TodoService2 {
   INSTANCE;
 
   private TodoDAO todoDAO;
   private ModelMapper modelMapper;
 
-  TodoService() {
+  TodoService2() {
     todoDAO = new TodoDAO();
     modelMapper = MapperUtil.INSTANCE.getModelMapper();
   }

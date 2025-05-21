@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.dto.TodoDTO;
-import org.servlet2spring.todo.service.TodoService;
+import org.servlet2spring.todo.service.TodoService2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //@WebServlet(name = "todoRegisterController", value = "/todo/register")
 public class TodoRegisterController extends HttpServlet {
 
-  private TodoService todoService = TodoService.INSTANCE;
+  private TodoService2 todoService2 = TodoService2.INSTANCE;
   private final DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   @Override

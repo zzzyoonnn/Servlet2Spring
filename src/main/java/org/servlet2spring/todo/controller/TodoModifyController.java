@@ -10,20 +10,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.dto.TodoDTO;
-import org.servlet2spring.todo.service.TodoService;
+import org.servlet2spring.todo.service.TodoService2;
 
 @Log4j2
 @WebServlet(name = "todoModifyController", value = "/todo/modify")
 public class TodoModifyController extends HttpServlet {
 
-  private TodoService todoService = TodoService.INSTANCE;
+  private TodoService2 todoService2 = TodoService2.INSTANCE;
   private final DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     try {
       Long no = Long.parseLong(req.getParameter("no"));
-      TodoDTO todoDTO = todoService.get(no);
+      TodoDTO todoDTO = todoService2.get(no);
 
       // 데이터 담기
       req.setAttribute("todoDTO", todoDTO);
@@ -49,7 +49,7 @@ public class TodoModifyController extends HttpServlet {
     log.info(todoDTO);
 
     try {
-      todoService.modify(todoDTO);
+      todoService2.modify(todoDTO);
     } catch (Exception e) {
       e.printStackTrace();
     }

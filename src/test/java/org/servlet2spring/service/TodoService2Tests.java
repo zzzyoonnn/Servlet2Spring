@@ -5,16 +5,16 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.servlet2spring.todo.dto.TodoDTO;
-import org.servlet2spring.todo.service.TodoService;
+import org.servlet2spring.todo.service.TodoService2;
 
 @Log4j2
-public class TodoServiceTests {
+public class TodoService2Tests {
 
-  private TodoService todoService;
+  private TodoService2 todoService2;
 
   @BeforeEach
   public void ready() {
-    todoService = TodoService.INSTANCE;
+    todoService2 = TodoService2.INSTANCE;
   }
 
   @Test
@@ -27,6 +27,6 @@ public class TodoServiceTests {
     log.info("----------테스트 코드의 Log4j2 설정 확인----------");
     log.info(todoDTO);
 
-    todoService.register(todoDTO);
+    todoService2.register(todoDTO);
   }
 }
