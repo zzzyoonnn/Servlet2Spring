@@ -35,4 +35,7 @@
 
     <mybatis:scan base-package="org.servlet2spring.todo.mapper"/>
 
+    <context:component-scan base-package="org.servlet2spring.todo.config" />
+    <context:component-scan base-package="org.servlet2spring.todo.service" />
+
 </beans>
