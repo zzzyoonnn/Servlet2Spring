@@ -1,8 +1,10 @@
 package org.servlet2spring.mapper;
 
+import java.time.LocalDate;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.servlet2spring.todo.domain.TodoVO;
 import org.servlet2spring.todo.mapper.TodoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,5 +21,17 @@ public class TodoMapperTests {
   @Test
   public void testGetTime() {
     log.info(todoMapper.getTime());
+  }
+
+  // TodoVO 입력 기능 확인
+  @Test
+  public void testInsert() {
+    TodoVO todoVO = TodoVO.builder()
+            .title("스프링 입력 테스트")
+            .dueDate(LocalDate.now())
+            .writer("user00")
+            .build();
+
+    todoMapper.insert(todoVO);
   }
 }
