@@ -6,8 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -91,6 +92,15 @@
                         </div>
                     </form>
 
+                    <script>
+                        const serverValidResult={}
+
+                        <c:forEach items="${errors}" var="error">
+                        serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
+                        </c:forEach>
+
+                        console.log(serverValidResult)
+                    </script>
 
                     <h5 class="card-title">Special title treatment</h5>
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
