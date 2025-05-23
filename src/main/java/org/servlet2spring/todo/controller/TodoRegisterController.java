@@ -5,8 +5,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.todo.service.TodoService2;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Log4j2
 @Controller
 @RequestMapping("/todo")
+@RequiredArgsConstructor
 //@WebServlet(name = "todoRegisterController", value = "/todo/register")
 public class TodoRegisterController extends HttpServlet {
 
@@ -49,7 +52,8 @@ public class TodoRegisterController extends HttpServlet {
   }
 
   @PostMapping("/register")
-  public String registerPost(TodoDTO todoDTO, RedirectAttributes redirectAttributes, BindingResult bindingResult) {
+  public String registerPost(@Valid TodoDTO todoDTO, BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
     log.info("POST todo register...");
 
     if (bindingResult.hasErrors()) {
