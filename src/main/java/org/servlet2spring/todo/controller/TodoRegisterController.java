@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.dto.TodoDTO;
+import org.servlet2spring.todo.service.TodoService;
 import org.servlet2spring.todo.service.TodoService2;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,8 @@ public class TodoRegisterController extends HttpServlet {
 
   private TodoService2 todoService2 = TodoService2.INSTANCE;
   private final DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+  private final TodoService todoService;
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,6 +67,8 @@ public class TodoRegisterController extends HttpServlet {
     }
 
     log.info(todoDTO);
+
+    todoService.register(todoDTO);
     return "redirect:/todo/list";
   }
 
