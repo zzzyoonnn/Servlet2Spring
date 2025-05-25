@@ -14,4 +14,8 @@
     <select id="selectAll" resultType="org.servlet2spring.todo.domain.TodoVO">
         select * from tbl_todo order by no desc
     </select>
+
+    <select id="selectOne" resultType="org.servlet2spring.todo.domain.TodoVO">
+        select * from tbl_todo where no = #{no}
+    </select>
 </mapper>
