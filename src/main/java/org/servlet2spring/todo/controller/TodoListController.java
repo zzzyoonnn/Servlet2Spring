@@ -1,7 +1,9 @@
 package org.servlet2spring.todo.controller;
 
 import jakarta.servlet.http.HttpServlet;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.servlet2spring.todo.service.TodoService;
 import org.servlet2spring.todo.service.TodoService2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Log4j2
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/todo")
 //@WebServlet(name = "todoListController", value = "/todo/list")
-public class TodoListController extends HttpServlet {
-  private TodoService2 todoService2 = TodoService2.INSTANCE;
+public class TodoListController {
+  //private TodoService2 todoService2 = TodoService2.INSTANCE;
+  private final TodoService todoService;
 
   @RequestMapping("/list")
   public void list(Model model) {
     log.info("todo list...");
+    model.addAttribute("dtoList", todoService.getAll());
   }
 
   //@RequestMapping(value = "/register", method = RequestMethod.GET)
