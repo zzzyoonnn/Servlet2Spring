@@ -1,6 +1,7 @@
 package org.servlet2spring.mapper;
 
 import java.time.LocalDate;
+import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,5 +34,12 @@ public class TodoMapperTests {
             .build();
 
     todoMapper.insert(todoVO);
+  }
+
+  // TodoVO 목록 기능 확인
+  @Test
+  public void testSelectAll() {
+    List<TodoVO> voList = todoMapper.selectAll();
+    voList.forEach(vo -> log.info(vo));
   }
 }
