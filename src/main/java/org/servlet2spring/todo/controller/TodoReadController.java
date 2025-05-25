@@ -28,7 +28,7 @@ public class TodoReadController extends HttpServlet {
   private TodoService2 todoService2 = TodoService2.INSTANCE;
   private final TodoService todoService;
 
-  @GetMapping("/read")
+  @GetMapping({"/read", "/modify"})
   public void read(@RequestParam("no") Long no, Model model) {
     TodoDTO todoDTO = todoService.getOne(no);
     log.info(todoDTO);
