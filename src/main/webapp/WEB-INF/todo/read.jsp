@@ -104,6 +104,17 @@
                             <button type="button" class="btn btn-secondary">List</button>
                         </div>
                     </div>
+
+                    <script>
+                        document.querySelector(".btn-primary").addEventListener("click", function(e) {
+                            // dto.no 값을 문자열로 감싸야 안전함
+                            self.location = "/todo/modify?no=" + "${dto.no}";
+                        }, false);
+
+                        document.querySelector(".btn-secondary").addEventListener("click", function(e) {
+                            self.location = "/todo/list";
+                        }, false);
+                    </script>
                 </div>
             </div>
         </div>
