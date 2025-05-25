@@ -42,4 +42,12 @@ public class TodoMapperTests {
     List<TodoVO> voList = todoMapper.selectAll();
     voList.forEach(vo -> log.info(vo));
   }
+
+  // 조회 기능 확인
+  @Test
+  public void testSelectOne() {
+    TodoVO todoVO = todoMapper.selectOne(1L);
+
+    log.info(todoVO);
+  }
 }
