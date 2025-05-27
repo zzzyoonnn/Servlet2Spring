@@ -13,26 +13,26 @@ import org.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.todo.service.TodoService2;
 
 @Log4j2
-@WebServlet(name = "todoModifyController", value = "/todo/modify")
+//@WebServlet(name = "todoModifyController", value = "/todo/modify")
 public class TodoModifyController extends HttpServlet {
 
   private TodoService2 todoService2 = TodoService2.INSTANCE;
   private final DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    try {
-      Long no = Long.parseLong(req.getParameter("no"));
-      TodoDTO todoDTO = todoService2.get(no);
-
-      // 데이터 담기
-      req.setAttribute("todoDTO", todoDTO);
-      req.getRequestDispatcher("/WEB-INF/todo/modify.jsp").forward(req, resp);
-    } catch (Exception e) {
-      log.error(e);
-      throw new ServletException("modify get.... error: " + e);
-    }
-  }
+//  @Override
+//  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//    try {
+//      Long no = Long.parseLong(req.getParameter("no"));
+//      TodoDTO todoDTO = todoService2.get(no);
+//
+//      // 데이터 담기
+//      req.setAttribute("todoDTO", todoDTO);
+//      req.getRequestDispatcher("/WEB-INF/todo/modify.jsp").forward(req, resp);
+//    } catch (Exception e) {
+//      log.error(e);
+//      throw new ServletException("modify get.... error: " + e);
+//    }
+//  }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
