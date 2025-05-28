@@ -21,7 +21,6 @@
 <div class="container-fluid">
     <div class="row">
         <h1>Header</h1>
-        <h1>${dto}</h1>
         <div class="col">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
@@ -114,6 +113,17 @@
                     </div>
                 </form>
             </div>
+
+            <script>
+                // @Valid에서 문제가 발생했을 경우
+                const serverValid = {}
+
+                <c:forEach items="${errors}" var="error">
+                serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
+                </c:forEach>
+
+                console.log(serverValidResult)
+            </script>
 
             <script>
                 const formObj = document.querySelector("#todoForm");
