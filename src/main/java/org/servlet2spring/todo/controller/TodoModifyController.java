@@ -11,8 +11,13 @@ import java.time.format.DateTimeFormatter;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.todo.service.TodoService2;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Log4j2
+@RequestMapping("/todo")
 //@WebServlet(name = "todoModifyController", value = "/todo/modify")
 public class TodoModifyController extends HttpServlet {
 
@@ -33,27 +38,29 @@ public class TodoModifyController extends HttpServlet {
 //      throw new ServletException("modify get.... error: " + e);
 //    }
 //  }
+//
+//
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String finishedStr = req.getParameter("finished");
-
-    TodoDTO todoDTO = TodoDTO.builder()
-            .no(Long.parseLong(req.getParameter("no")))
-            .title(req.getParameter("title"))
-            .dueDate(LocalDate.parse(req.getParameter("dueDate"), DATEFORMATTER))
-            .finished(finishedStr != null && finishedStr.equals("on"))
-            .build();
-
-    log.info("/todo/modify POST...");
-    log.info(todoDTO);
-
-    try {
-      todoService2.modify(todoDTO);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    resp.sendRedirect("/todo/list");
-  }
+//  @Override
+//  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//    String finishedStr = req.getParameter("finished");
+//
+//    TodoDTO todoDTO = TodoDTO.builder()
+//            .no(Long.parseLong(req.getParameter("no")))
+//            .title(req.getParameter("title"))
+//            .dueDate(LocalDate.parse(req.getParameter("dueDate"), DATEFORMATTER))
+//            .finished(finishedStr != null && finishedStr.equals("on"))
+//            .build();
+//
+//    log.info("/todo/modify POST...");
+//    log.info(todoDTO);
+//
+//    try {
+//      todoService2.modify(todoDTO);
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//    }
+//
+//    resp.sendRedirect("/todo/list");
+//  }
 }
