@@ -119,19 +119,14 @@
                 const formObj = document.querySelector("#todoForm");
 
                 document.querySelector(".btn-danger").addEventListener("click", function(e) {
-                    console.log("버튼 클릭됨");
                     e.preventDefault();
                     e.stopPropagation();
 
-                    console.log("Remove 버튼 클릭됨");
                     formObj.action = "/todo/remove";
                     formObj.method = "post";
 
                     formObj.submit();
                 }, false);
-            </script>
-            <script>
-
 
                 document.querySelector(".btn-primary").addEventListener("click", function (e) {
                     self.location = "/todo/modify?no=" + "${dto.no}";
@@ -140,8 +135,6 @@
                 document.querySelector(".btn-secondary").addEventListener("click", function (e) {
                     self.location = "/todo/list";
                 }, false);
-
-
             </script>
         </div>
     </div>
