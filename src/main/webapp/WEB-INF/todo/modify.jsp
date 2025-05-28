@@ -14,17 +14,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
         <h1>Header</h1>
+        <h1>${dto}</h1>
         <div class="col">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Navbar</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -36,13 +40,16 @@
                                 <a class="nav-link" href="#">Link</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
                                     Dropdown
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Action</a></li>
                                     <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 </ul>
                             </li>
@@ -60,35 +67,34 @@
         </div>
     </div>
     <div class="row content">
-        <div class="row content">
-            <div class="card">
-                <div class="card-header">
-                    Featured
-                </div>
-                <div class="card-body">
-                    <form action="/todo/modify" method="post">
+        <div class="card">
+            <div class="card-header">
+                Featured
+            </div>
+            <div class="card-body">
+                <form id = "todoForm" action="/todo/modify" method="post">
                     <div class="input-group mb-3">
                         <span class="input-group-text">No</span>
-                        <input type="text" name="no" class="form-control"
-                               value='<c:out value="${dto.no}" />' readonly>
+                        <input type="text" name="no" class="form-control" value="${dto.no}" readonly/>
+
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text">Title</span>
                         <input type="text" name="title" class="form-control"
-                               value='<c:out value="${dto.title}" />' >
+                               value="${dto.title}"/>
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text">DueDate</span>
                         <input type="date" name="dueDate" class="form-control"
-                               value='<c:out value="${dto.dueDate}" />' >
+                               value="${dto.dueDate}"/>
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text">Writer</span>
                         <input type="text" name="writer" class="form-control"
-                               value='<c:out value="${dto.writer}" />' readonly>
+                               value="${dto.writer}" readonly/>
                     </div>
 
                     <div class="form-check">
@@ -106,32 +112,37 @@
                             <button type="button" class="btn btn-secondary">List</button>
                         </div>
                     </div>
-                    </form>
-
-                    <script>
-                        const formObj = document.querySelector("form");
-
-                        document.querySelector(".btn-danger").addEventListener("click", function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-
-                            formObj.action = "/todo/remove";
-                            formObj.method = "post";
-
-                            formObj.submit();
-                        }, false);
-
-                        document.querySelector(".btn-primary").addEventListener("click", function(e) {
-                            // dto.no 값을 문자열로 감싸야 안전함
-                            self.location = "/todo/modify?no=" + ${dto.no};
-                        }, false);
-
-                        document.querySelector(".btn-secondary").addEventListener("click", function(e) {
-                            self.location = "/todo/list";
-                        }, false);
-                    </script>
-                </div>
+                </form>
             </div>
+
+            <script>
+                const formObj = document.querySelector("#todoForm");
+
+                document.querySelector(".btn-danger").addEventListener("click", function(e) {
+                    console.log("버튼 클릭됨");
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    console.log("Remove 버튼 클릭됨");
+                    formObj.action = "/todo/remove";
+                    formObj.method = "post";
+
+                    formObj.submit();
+                }, false);
+            </script>
+            <script>
+
+
+                document.querySelector(".btn-primary").addEventListener("click", function (e) {
+                    self.location = "/todo/modify?no=" + "${dto.no}";
+                }, false);
+
+                document.querySelector(".btn-secondary").addEventListener("click", function (e) {
+                    self.location = "/todo/list";
+                }, false);
+
+
+            </script>
         </div>
     </div>
     <div class="row footer">
@@ -144,6 +155,8 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
 </body>
 </html>
