@@ -17,17 +17,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Log4j2
-@RequestMapping("/todo")
 @Controller
+@RequiredArgsConstructor
+@RequestMapping("/todo")
 //@WebServlet(name = "todoRemoveController", value = "/todo/remove")
 public class TodoRemoveController extends HttpServlet {
 
+  private final TodoService todoService;
   //private TodoService2 todoService2 = TodoService2.INSTANCE;
 
   @PostMapping("/remove")
   public String remove(@RequestParam("no") Long no, RedirectAttributes redirectAttributes) {
     log.info("-----remove-----");
     log.info("no: " + no);
+
+    todoService.remove(no);
 
     return "redirect:/todo/list";
   }
