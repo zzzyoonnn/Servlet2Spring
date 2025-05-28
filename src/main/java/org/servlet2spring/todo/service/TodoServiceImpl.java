@@ -46,4 +46,10 @@ public class TodoServiceImpl implements TodoService {
 
     return todoDTO;
   }
+
+  // 삭제 기능
+  @Override
+  public void remove(long no) {
+    todoMapper.delete(no);
+  }
 }

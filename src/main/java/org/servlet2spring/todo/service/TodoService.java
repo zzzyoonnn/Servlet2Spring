@@ -10,4 +10,6 @@ public interface TodoService {
   List<TodoDTO> getAll();
 
   TodoDTO getOne(long no);
+
+  void remove(long no);
 }
