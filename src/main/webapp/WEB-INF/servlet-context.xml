@@ -25,6 +25,7 @@
         <property name="formatters">
             <set>
                 <bean class="org.servlet2spring.examples.springSample.controller.formatter.LocalDateFormatter"/>
+                <bean class="org.servlet2spring.todo.controller.formatter.CheckboxFormatter"/>
             </set>
         </property>
     </bean>
