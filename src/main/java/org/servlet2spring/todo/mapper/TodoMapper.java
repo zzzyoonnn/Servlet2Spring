@@ -2,6 +2,7 @@ package org.servlet2spring.todo.mapper;
 
 import java.util.List;
 import org.servlet2spring.todo.domain.TodoVO;
+import org.servlet2spring.todo.dto.PageRequestDTO;
 
 public interface TodoMapper {
 
@@ -16,4 +17,6 @@ public interface TodoMapper {
   void delete(long no);
 
   void update(TodoVO todoVO);
+
+  List<TodoVO> selectList(PageRequestDTO pageRequestDTO);
 }

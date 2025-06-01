@@ -26,4 +26,8 @@
     <update id="update">
         update tbl_todo set title = #{title}, dueDate = #{dueDate}, finished = #{finished} where no = #{no}
     </update>
+
+    <select id="selectList" resultType="org.servlet2spring.todo.domain.TodoVO">
+        select * from tbl_todo order by no desc limit #{skip}, #{size}
+    </select>
 </mapper>
