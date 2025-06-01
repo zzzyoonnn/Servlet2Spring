@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.servlet2spring.todo.domain.TodoVO;
+import org.servlet2spring.todo.dto.PageRequestDTO;
+import org.servlet2spring.todo.dto.PageResponseDTO;
 import org.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.todo.mapper.TodoMapper;
 import org.springframework.stereotype.Service;
@@ -29,13 +31,30 @@ public class TodoServiceImpl implements TodoService {
   }
 
   // 목록 기능
+//  @Override
+//  public List<TodoDTO> getAll() {
+//    List<TodoDTO> dtoList = todoMapper.selectAll().stream()
+//            .map(vo -> modelMapper.map(vo, TodoDTO.class))
+//            .collect(Collectors.toList());
+//
+//    return dtoList;
+//  }
   @Override
-  public List<TodoDTO> getAll() {
-    List<TodoDTO> dtoList = todoMapper.selectAll().stream()
+  public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
+    List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+    List<TodoDTO> dtoList = voList.stream()
             .map(vo -> modelMapper.map(vo, TodoDTO.class))
             .collect(Collectors.toList());
 
-    return dtoList;
+    int total = todoMapper.getCount(pageRequestDTO);
+
+    PageResponseDTO<TodoDTO> pageResponseDTO = PageResponseDTO.<TodoDTO>withAll()
+            .dtoList(dtoList)
+            .total(total)
+            .pageRequestDTO(pageRequestDTO)
+            .build();
+
+    return pageResponseDTO;
   }
 
   // 조회 기능
