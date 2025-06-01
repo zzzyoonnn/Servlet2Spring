@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.servlet2spring.todo.dto.PageRequestDTO;
+import org.servlet2spring.todo.dto.PageResponseDTO;
 import org.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.todo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +29,13 @@ public class TodoServiceTests {
             .build();
 
     todoService.register(todoDTO);
+  }
+
+  @Test
+  public void testPaging() {
+    PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
+    PageResponseDTO<TodoDTO> responseDTO = todoService.getList(pageRequestDTO);
+    log.info(responseDTO);
+    responseDTO.getDtoList().stream().forEach(todoDTO -> log.info(todoDTO));
   }
 }
