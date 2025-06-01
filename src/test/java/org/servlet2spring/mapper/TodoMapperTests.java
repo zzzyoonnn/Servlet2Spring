@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.servlet2spring.todo.domain.TodoVO;
+import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.mapper.TodoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -49,5 +50,15 @@ public class TodoMapperTests {
     TodoVO todoVO = todoMapper.selectOne(1L);
 
     log.info(todoVO);
+  }
+
+  // 페이징 기능 확인
+  @Test
+  public void testSelectList() {
+    PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
+
+    List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+
+    voList.forEach(vo -> log.info(vo));
   }
 }
