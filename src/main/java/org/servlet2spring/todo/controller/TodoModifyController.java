@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.todo.service.TodoService;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class TodoModifyController extends HttpServlet {
   private final TodoService todoService;
 
   @PostMapping("/modify")
-  public String modify(@Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+  public String modify(@Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, PageRequestDTO pageRequestDTO) {
     if (bindingResult.hasErrors()) {
       log.info("has errors: {}", bindingResult.getAllErrors());
 
@@ -31,6 +32,9 @@ public class TodoModifyController extends HttpServlet {
 
     log.info(todoDTO);
     todoService.modify(todoDTO);
+
+    redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
+    redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
 
     return "redirect:/todo/list";
   }
