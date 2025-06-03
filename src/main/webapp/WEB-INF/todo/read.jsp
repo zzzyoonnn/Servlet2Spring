@@ -106,8 +106,9 @@
                     </div>
 
                     <script>
+                        // 수정으로 이동하는 이벤트
                         document.querySelector(".btn-primary").addEventListener("click", function(e) {
-                            self.location = "/todo/modify?no=" + "${dto.no}";
+                            self.location = "/todo/modify?no=" + "${dto.no}&${pageRequestDTO.link}" ;
                         }, false);
 
                         // 목록으로 이동하는 이벤트
