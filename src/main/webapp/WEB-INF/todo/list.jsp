@@ -103,7 +103,7 @@
                             </c:forEach>
 
                             <c:if test="${responseDTO.next}">
-                                <li class="page-itme">
+                                <li class="page-item">
                                     <a class="page-link">Next</a>
                                 </li>
                             </c:if>
