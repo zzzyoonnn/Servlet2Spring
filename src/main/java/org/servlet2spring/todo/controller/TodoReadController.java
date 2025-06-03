@@ -4,6 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.dto.TodoDTO;
 import org.servlet2spring.todo.service.TodoService;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class TodoReadController extends HttpServlet {
   private final TodoService todoService;
 
   @GetMapping({"/read", "/modify"})
-  public void read(@RequestParam("no") Long no, Model model) {
+  public void read(@RequestParam("no") Long no, Model model, PageRequestDTO pageRequestDTO) {
     TodoDTO todoDTO = todoService.getOne(no);
     log.info(todoDTO);
 

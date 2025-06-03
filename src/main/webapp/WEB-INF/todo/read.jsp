@@ -107,12 +107,12 @@
 
                     <script>
                         document.querySelector(".btn-primary").addEventListener("click", function(e) {
-                            // dto.no 값을 문자열로 감싸야 안전함
                             self.location = "/todo/modify?no=" + "${dto.no}";
                         }, false);
 
+                        // 목록으로 이동하는 이벤트
                         document.querySelector(".btn-secondary").addEventListener("click", function(e) {
-                            self.location = "/todo/list";
+                            self.location = "/todo/list?" + "${pageRequestDTO.link}";
                         }, false);
                     </script>
                 </div>
