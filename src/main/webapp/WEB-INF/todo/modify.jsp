@@ -72,6 +72,9 @@
             </div>
             <div class="card-body">
                 <form id = "todoForm" action="/todo/modify" method="post">
+                    <input type="hidden" name="page" value="${pageRequestDTO.page}" />
+                    <input type="hidden" name="size" value="${pageRequestDTO.size}" />
+
                     <div class="input-group mb-3">
                         <span class="input-group-text">No</span>
                         <input type="text" name="no" class="form-control" value="${dto.no}" readonly/>

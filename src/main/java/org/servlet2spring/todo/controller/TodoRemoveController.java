@@ -3,6 +3,7 @@ package org.servlet2spring.todo.controller;
 import jakarta.servlet.http.HttpServlet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.service.TodoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +20,14 @@ public class TodoRemoveController extends HttpServlet {
   private final TodoService todoService;
 
   @PostMapping("/remove")
-  public String remove(@RequestParam("no") Long no, RedirectAttributes redirectAttributes) {
+  public String remove(@RequestParam("no") Long no, RedirectAttributes redirectAttributes, PageRequestDTO pageRequestDTO) {
     log.info("-----remove-----");
     log.info("no: " + no);
 
     todoService.remove(no);
 
+    redirectAttributes.addAttribute("page", 1);
+    redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
     return "redirect:/todo/list";
   }
 }
