@@ -8,59 +8,73 @@
     </select>
 
     <insert id="insert">
-        insert into tbl_todo(title, dueDate, writer) values (#{title}, #{dueDate}, #{writer})
+        insert into tbl_todo(title, dueDate, writer)
+        values (#{title}, #{dueDate}, #{writer})
     </insert>
 
     <select id="selectAll" resultType="org.servlet2spring.todo.domain.TodoVO">
-        select * from tbl_todo order by no desc
+        select *
+        from tbl_todo
+        order by no desc
     </select>
 
     <select id="selectOne" resultType="org.servlet2spring.todo.domain.TodoVO">
-        select * from tbl_todo where no = #{no}
+        select *
+        from tbl_todo
+        where no = #{no}
     </select>
 
     <delete id="delete">
-        delete from tbl_todo where no = #{no}
+        delete
+        from tbl_todo
+        where no = #{no}
     </delete>
 
     <update id="update">
-        update tbl_todo set title = #{title}, dueDate = #{dueDate}, finished = #{finished} where no = #{no}
+        update tbl_todo
+        set title    = #{title},
+            dueDate  = #{dueDate},
+            finished = #{finished}
+        where no = #{no}
     </update>
 
-<!--    <select id="selectList" resultType="org.servlet2spring.todo.domain.TodoVO">-->
-<!--        select * from tbl_todo order by no desc limit #{skip}, #{size}-->
-<!--    </select>-->
+    <sql id="search">
+        <where>
+            <if test="types != null and types.length > 0">
+                <foreach collection="types" item="type" open="(" close=")" separator=" OR ">
+                    <if test="type == 't'.toString()">
+                        title like concat('%', #{keyword}, '%')
+                    </if>
+                    <if test="type == 'w'.toString()">
+                        writer like concat('%', #{keyword}, '%')
+                    </if>
+                </foreach>
+            </if>
 
-    <select id="getCount" resultType="int">
-        select count(no) from tbl_todo
-    </select>
+            <if test="finished">
+                <trim prefix="and">
+                    finished = false
+                </trim>
+            </if>
+
+            <if test="from != null and to != null">
+                <trim prefix="and">
+                    dueDate between #{from} and #{to}
+                </trim>
+            </if>
+        </where>
+    </sql>
 
     <select id="selectList" resultType="org.servlet2spring.todo.domain.TodoVO">
         select * from tbl_todo
-            <where>
-                <if test="types != null and types.length > 0">
-                    <foreach collection="types" item="type" open="(" close=")" separator=" OR ">
-                        <if test="type == 't'.toString()">
-                             title like concat('%', #{keyword}, '%')
-                        </if>
-                        <if test="type == 'w'.toString()">
-                            writer like concat('%', #{keyword}, '%')
-                        </if>
-                    </foreach>
-                </if>
 
-                 <if test="finished">
-                     <trim prefix="and">
-                         finished = false
-                     </trim>
-                 </if>
+        <include refid="search"></include>
 
-                 <if test="from != null and to != null">
-                     <trim prefix="and">
-                         dueDate between #{from} and #{to}
-                     </trim>
-                 </if>
-            </where>
         order by no desc limit #{skip}, #{size}
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(no)
+        from tbl_todo
     </select>
 </mapper>
