@@ -74,7 +74,7 @@
     </select>
 
     <select id="getCount" resultType="int">
-        select count(no)
-        from tbl_todo
+        select count(no) from tbl_todo
+        <include refid="search"></include>
     </select>
 </mapper>
