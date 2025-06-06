@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,4 +50,12 @@ public class PageRequestDTO {
   private boolean finished;
   private LocalDate from;
   private LocalDate to;
+
+  // 제목(title), 작성자(writer)를 편리하게 관리하기 위한 메서드
+  public boolean checkType(String type) {
+    if (types == null || types.length == 0) {
+      return false;
+    }
+    return Arrays.stream(types).anyMatch(type::equals);
+  }
 }
