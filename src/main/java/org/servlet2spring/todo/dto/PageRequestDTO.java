@@ -3,6 +3,8 @@ package org.servlet2spring.todo.dto;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.Arrays;
 import lombok.AllArgsConstructor;
@@ -34,14 +36,38 @@ public class PageRequestDTO {
   }
 
   public String getLink() {
-    if (link == null) {
-      StringBuilder builder = new StringBuilder();
-      builder.append("page=" + this.page);
-      builder.append("&size=" + this.size);
-      link = builder.toString();
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("page=" + this.page);
+    builder.append("&size=" + this.size);
+
+    if (finished) {
+      builder.append("&finished=true");
     }
 
-    return link;
+    if (types != null && types.length > 0) {
+      for (int i = 0; i < types.length; i++) {
+        builder.append("&type=" + types[i]);
+      }
+    }
+
+    if (keyword != null) {
+      try {
+        builder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
+      } catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+      }
+    }
+
+    if (from != null) {
+      builder.append("&from=" + from.toString());
+    }
+
+    if (to != null) {
+      builder.append("&to=" + to.toString());
+    }
+
+    return builder.toString();
   }
 
   // 검색/필터링 기능에 필요한 변수 추가
