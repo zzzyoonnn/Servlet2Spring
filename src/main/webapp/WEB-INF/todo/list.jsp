@@ -19,7 +19,6 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <h1>Header</h1>
         <div class="col">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
@@ -57,6 +56,36 @@
                     </div>
                 </div>
             </nav>
+        </div>
+        <div class="row content">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Search</h5>
+                        <form action="/todo/list" method="get">
+                            <input type="hidden" name="size" value="${pageRequestDTO.size}">
+                            <div class="mb-3">
+                                <input type="checkbox" name="finished" />완료 여부
+                            </div>
+                            <div class="mb-3">
+                                <input type="checkbox" name="types" value="t">제목
+                                <input type="checkbox" name="types" value="w">작성자
+                                <input type="text" name="keyword" class="form-control" />
+                            </div>
+                            <div class="input-group mb-3 dueDateDiv">
+                                <input type="date" name="from" class="form-control" />
+                                <input type="date" name="to" class="form-control" />
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="float-end">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                    <button class="btn btn-info" type="reset">Clear</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row content">
