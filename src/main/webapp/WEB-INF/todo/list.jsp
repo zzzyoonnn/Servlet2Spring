@@ -62,7 +62,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Search</h5>
-                        <form action="/todo/list" method="get">
+                        <form id="searchForm" action="/todo/list" method="get">
                             <input type="hidden" name="size" value="${pageRequestDTO.size}">
                             <div class="mb-3">
                                 <input type="checkbox" name="finished" ${pageRequestDTO.finished ? "checked" : ""}/>완료 여부
@@ -141,20 +141,24 @@
                         </ul>
                     </div>
                     <script>
-                        document.querySelector(".pagination").addEventListener("click", function(e) {
+                        document.querySelector(".pagination").addEventListener("click", function (e) {
                             e.preventDefault()
                             e.stopPropagation()
 
                             const target = e.target
 
-                            if (target.tagName !== 'A') {
+                            if(target.tagName !== 'A') {
                                 return
                             }
-
                             const num = target.getAttribute("data-num")
 
-                            self.location = `/todo/list?page=\${num}`
-                        })
+                            const formObj = document.querySelector("#searchForm")
+
+                            formObj.innerHTML += `<input type='hidden' name='page' value='\${num}'>`
+
+                            formObj.submit();
+
+                        },false)
 
                         document.querySelector(".clearBtn").addEventListener("click", function(e) {
                             e.preventDefault()
