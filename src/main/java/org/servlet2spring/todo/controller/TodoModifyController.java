@@ -33,9 +33,8 @@ public class TodoModifyController extends HttpServlet {
     log.info(todoDTO);
     todoService.modify(todoDTO);
 
-    redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
-    redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
+    redirectAttributes.addAttribute("no", pageRequestDTO.getTo());
 
-    return "redirect:/todo/list";
+    return "redirect:/todo/read";
   }
 }
