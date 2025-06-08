@@ -47,7 +47,7 @@ public class PageRequestDTO {
 
     if (types != null && types.length > 0) {
       for (int i = 0; i < types.length; i++) {
-        builder.append("&type=" + types[i]);
+        builder.append("&types=" + types[i]);
       }
     }
 
