@@ -135,7 +135,7 @@
                     e.preventDefault();
                     e.stopPropagation();
 
-                    formObj.action = "/todo/remove";
+                    formObj.action = `/todo/remove?${pageRequestDTO.link}`;
                     formObj.method = "post";
 
                     formObj.submit();

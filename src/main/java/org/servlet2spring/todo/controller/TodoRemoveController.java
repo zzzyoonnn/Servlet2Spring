@@ -26,8 +26,8 @@ public class TodoRemoveController extends HttpServlet {
 
     todoService.remove(no);
 
-    redirectAttributes.addAttribute("page", 1);
-    redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
-    return "redirect:/todo/list";
+//    redirectAttributes.addAttribute("page", 1);
+//    redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
+    return "redirect:/todo/list?" + pageRequestDTO.getLink();
   }
 }
