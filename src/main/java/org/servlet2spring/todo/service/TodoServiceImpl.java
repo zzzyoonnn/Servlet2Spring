@@ -31,14 +31,6 @@ public class TodoServiceImpl implements TodoService {
   }
 
   // 목록 기능
-//  @Override
-//  public List<TodoDTO> getAll() {
-//    List<TodoDTO> dtoList = todoMapper.selectAll().stream()
-//            .map(vo -> modelMapper.map(vo, TodoDTO.class))
-//            .collect(Collectors.toList());
-//
-//    return dtoList;
-//  }
   @Override
   public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
     List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
