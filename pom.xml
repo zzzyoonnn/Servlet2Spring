@@ -17,6 +17,13 @@
         <junit.version>5.10.0</junit.version>
     </properties>
 
+    <parent>
+        <!-- Spring Boot Starter Parent -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.6</version>
+    </parent>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -157,14 +164,6 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>8.0.1.Final</version>
-        </dependency>
-
-        <!-- Spring Boot Starter Parent -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-parent</artifactId>
-            <version>3.2.6</version>
-            <type>pom</type>
         </dependency>
 
         <!-- Spring Boot Starter Web(Spring MVC + Embedded Tomcat) -->
