@@ -180,6 +180,13 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
             <version>3.2.6</version>
         </dependency>
+
+        <!-- Spring Boot Starter Log4j2 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <version>3.2.6</version>
+        </dependency>
     </dependencies>
 
 </project>
