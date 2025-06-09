@@ -95,34 +95,34 @@
             <version>2.12.4</version>
         </dependency>
 
-        <!-- Spring Core -->
+        <!-- Spring Core
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>6.2.3</version>
-        </dependency>
+        </dependency>-->
 
-        <!-- Spring Context -->
+        <!-- Spring Context
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>6.2.3</version>
-        </dependency>
+        </dependency>-->
 
-        <!-- Spring Test -->
+        <!-- Spring Test
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>6.2.3</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
-        <!-- Spring Web MVC -->
+        <!-- Spring Web MVC
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>6.2.3</version>
-        </dependency>
+        </dependency>-->
 
         <!-- MyBatis -->
         <dependency>
@@ -138,19 +138,19 @@
             <version>3.0.3</version>
         </dependency>
 
-        <!-- Spring JDBC -->
+        <!-- Spring JDBC
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>6.2.3</version>
-        </dependency>
+        </dependency>-->
 
-        <!-- Spring Transaction -->
+        <!-- Spring Transaction
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>6.2.3</version>
-        </dependency>
+        </dependency>-->
 
         <!-- hibernate-validator -->
         <dependency>
