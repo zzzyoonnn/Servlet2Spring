@@ -158,6 +158,14 @@
             <artifactId>hibernate-validator</artifactId>
             <version>8.0.1.Final</version>
         </dependency>
+
+        <!-- Spring Boot Starter Parent -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-parent</artifactId>
+            <version>3.2.6</version>
+            <type>pom</type>
+        </dependency>
     </dependencies>
 
 </project>
