@@ -166,6 +166,13 @@
             <version>3.2.6</version>
             <type>pom</type>
         </dependency>
+
+        <!-- Spring Boot Starter Web(Spring MVC + Embedded Tomcat) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.2.6</version>
+        </dependency>
     </dependencies>
 
 </project>
