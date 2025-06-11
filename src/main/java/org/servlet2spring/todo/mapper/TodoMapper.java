@@ -1,9 +1,11 @@
 package org.servlet2spring.todo.mapper;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.servlet2spring.todo.domain.TodoVO;
 import org.servlet2spring.todo.dto.PageRequestDTO;
 
+@Mapper
 public interface TodoMapper {
 
   String getTime();
