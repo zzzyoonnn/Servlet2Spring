@@ -10,5 +10,10 @@
 <hr/>
 <!-- 주석 처리 -->
 <!-- <h4 th:text="${list}"></h4> -->
+
+<!-- th:with를 이용한 변수 선언 -->
+<div th:with="num1 = ${10}, num2 = ${20}">
+    <h4 th:text="${num1 + num2}"></h4>
+</div>
 </body>
 </html>
