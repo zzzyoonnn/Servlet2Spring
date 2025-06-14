@@ -8,6 +8,7 @@
 <!-- 출력 -->
 <h4>[[${list}]]</h4>
 <hr/>
+
 <!-- 주석 처리 -->
 <!-- <h4 th:text="${list}"></h4> -->
 
@@ -15,5 +16,16 @@
 <div th:with="num1 = ${10}, num2 = ${20}">
     <h4 th:text="${num1 + num2}"></h4>
 </div>
+
+<!-- th:with를 이용한 변수 선언 -->
+<ul>
+    <li th:each="str: ${list}" th:text="${str}"></li>
+</ul>
+
+<ul>
+    <th:block th:each="str: ${list}">
+        <li>[[${str}]]</li>
+    </th:block>
+</ul>
 </body>
 </html>
