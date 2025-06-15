@@ -42,5 +42,17 @@
         <span th:unless="${status.odd}"> EVEN -- [[${str}]]</span>
     </li>
 </ul>
+
+<!-- 삼항 연산자 -->
+<ul>
+    <li th:each="str,status: ${list}">
+        <span th:text="${status.odd} ? 'ODD --- '+${str}"></span>
+    </li>
+</ul>
+<ul>
+    <li th:each="str,status: ${list}">
+        <span th:text="${status.odd} ? 'ODD --- '+${str} : 'EVEN --- '+${str}"></span>
+    </li>
+</ul>
 </body>
 </html>
