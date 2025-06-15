@@ -34,5 +34,13 @@
         [[${status.index}]] -- [[${str}]]
     </li>
 </ul>
+
+<!-- th:if / th:less -->
+<ul>
+    <li th:each="str,status: ${list}">
+        <span th:if="${status.odd}"> ODD -- [[${str}]]</span>
+        <span th:unless="${status.odd}"> EVEN -- [[${str}]]</span>
+    </li>
+</ul>
 </body>
 </html>
