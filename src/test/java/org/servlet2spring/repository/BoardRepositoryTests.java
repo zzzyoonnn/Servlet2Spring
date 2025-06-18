@@ -1,5 +1,6 @@
 package org.servlet2spring.repository;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,14 @@ public class BoardRepositoryTests {
       Board result = boardRepository.save(board);
       log.info("BNO: " + result.getBno());
     });
+  }
+
+  @Test
+  public void testSelect() {
+    Long bno = 100L;
+    Optional<Board> result = boardRepository.findById(bno);
+    Board board = result.orElseThrow();
+    log.info(board);
   }
 
 }
