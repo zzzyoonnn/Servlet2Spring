@@ -38,4 +38,13 @@ public class BoardRepositoryTests {
     log.info(board);
   }
 
+  @Test
+  public void testUpdate() {
+    Long bno = 100L;
+    Optional<Board> result = boardRepository.findById(bno);
+    Board board = result.orElseThrow();
+    board.change("update title", "update content");
+    boardRepository.save(board);
+  }
+
 }
