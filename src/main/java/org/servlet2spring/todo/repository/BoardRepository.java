@@ -13,4 +13,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
   @Query("select b from Board b where b.title like concat('%', :keyword, '%')")
   Page<Board> findKeyword(@Param("keyword") String keyword, Pageable pageable);
 
+  @Query(value = "select now()", nativeQuery = true)
+  String getTime();
 }
