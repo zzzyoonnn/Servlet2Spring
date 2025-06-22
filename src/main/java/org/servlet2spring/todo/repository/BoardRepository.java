@@ -1,6 +1,6 @@
 package org.servlet2spring.todo.repository;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import org.apache.ibatis.annotations.Param;
 import org.servlet2spring.todo.domain.Board;
 import org.servlet2spring.todo.search.BoardSearch;
