@@ -43,4 +43,10 @@ public class BoardServiceImpl implements BoardService {
     board.change(boardDTO.getTitle(), boardDTO.getContent());
     boardRepository.save(board);
   }
+
+  // 삭제
+  @Override
+  public void remove(Long bno) {
+    boardRepository.deleteById(bno);
+  }
 }
