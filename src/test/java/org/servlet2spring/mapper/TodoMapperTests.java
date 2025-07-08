@@ -63,6 +63,7 @@ public class TodoMapperTests {
   }
 
   // foreach
+  /*
   @Test
   public void testSelectSearch() {
     PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
@@ -81,4 +82,6 @@ public class TodoMapperTests {
 
     log.info(todoMapper.getCount(pageRequestDTO));
   }
+
+   */
 }

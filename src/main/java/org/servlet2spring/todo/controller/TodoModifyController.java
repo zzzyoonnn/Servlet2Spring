@@ -21,6 +21,7 @@ public class TodoModifyController extends HttpServlet {
 
   private final TodoService todoService;
 
+  /*
   @PostMapping("/modify")
   public String modify(@Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, PageRequestDTO pageRequestDTO) {
     if (bindingResult.hasErrors()) {
@@ -37,4 +38,5 @@ public class TodoModifyController extends HttpServlet {
 
     return "redirect:/todo/read";
   }
+  */
 }
