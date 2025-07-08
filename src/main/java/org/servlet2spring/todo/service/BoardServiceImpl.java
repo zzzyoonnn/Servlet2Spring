@@ -1,6 +1,7 @@
 package org.servlet2spring.todo.service;
 
 import jakarta.transaction.Transactional;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -22,5 +23,13 @@ public class BoardServiceImpl implements BoardService {
     Board board = modelMapper.map(boardDTO, Board.class);
     Long bno = boardRepository.save(board).getBno();
     return bno;
+  }
+
+  @Override
+  public BoardDTO readOne(Long bno) {
+    Optional<Board> result = boardRepository.findById(bno);
+    Board board = result.orElseThrow();
+    BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+    return boardDTO;
   }
 }
