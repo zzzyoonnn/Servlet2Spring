@@ -2,7 +2,9 @@ package org.servlet2spring.todo.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.servlet2spring.todo.dto.BoardDTO;
 import org.servlet2spring.todo.dto.PageRequestDTO;
+import org.servlet2spring.todo.dto.PageResponseDTO;
 import org.servlet2spring.todo.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,8 @@ public class BoardController {
 
   @GetMapping("/list")
   public void list(PageRequestDTO pageRequestDTO, Model model) {
-
+    PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+    log.info(responseDTO);
+    model.addAttribute("responseDTO", responseDTO);
   }
 }
