@@ -104,6 +104,14 @@
         formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
         formObj.submit();
     }, false);
+
+    document.querySelector(".clearBtn").addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        self.location = '/board/list'
+    }, false);
+
 </script>
 <head>
     <meta charset="UTF-8">
