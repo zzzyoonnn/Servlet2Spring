@@ -43,8 +43,17 @@
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+    const errors = [[${errors}]]
+    console.log(errors)
 
+    let errorMsg = ''
 
+    if (errors) {
+        for (let i = 0; i < errors.length; i++) {
+            errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
+        }
+        alert(errorMsg)
+    }
 </script>
 <body>
 
