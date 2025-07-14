@@ -63,5 +63,23 @@ public class BoardController {
     model.addAttribute("dto", boardDTO);
   }
 
-  // 수정/삭제 기능
+  // 수정 기능
+  @PostMapping("/modify")
+  public String modify(PageRequestDTO pageRequestDTO, @Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    log.info("board modify post: " + boardDTO);
+
+    if (bindingResult.hasErrors()) {
+      log.info("has errors");
+
+      String link = pageRequestDTO.getLink();
+      redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+      redirectAttributes.addAttribute("bno", boardDTO.getBno());
+      return "redirect:/board/modify?" + link;
+    }
+
+    boardService.modify(boardDTO);
+    redirectAttributes.addFlashAttribute("result", "modified");
+    redirectAttributes.addAttribute("bno", boardDTO.getBno());
+    return "redirect:/board/read";
+  }
 }
