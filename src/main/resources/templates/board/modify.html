@@ -80,6 +80,7 @@
     const link = [[${pageRequestDTO.getLink()}]]
     const formObj = document.querySelector("#f1")
 
+    // 수정
     document.querySelector(".modBtn").addEventListener("click", function (e) {
         e.preventDefault()
         e.stopPropagation()
@@ -89,6 +90,17 @@
         formObj.submit()
 
     }, false)
+
+    // 삭제
+    document.querySelector(".removeBtn").addEventListener("click", function(e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        formObj.action = `/board/remove`
+        formObj.method = 'post'
+        formObj.submit()
+    }, false)
+
 </script>
 <body>
 
