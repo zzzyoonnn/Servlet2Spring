@@ -56,10 +56,12 @@ public class BoardController {
   }
 
   // 조회 기능
-  @GetMapping("/read")
+  @GetMapping({"/read", "/modify"})
   public void read(Long bno, PageRequestDTO pageRequestDTO, Model model) {
     BoardDTO boardDTO = boardService.readOne(bno);
     log.info(boardDTO);
     model.addAttribute("dto", boardDTO);
   }
+
+  // 수정/삭제 기능
 }
