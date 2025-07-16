@@ -254,6 +254,13 @@
             <version>5.0.0</version>
             <classifier>jakarta</classifier>
         </dependency>
+
+        <!-- SpringFox Swagger UI -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>3.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
