@@ -8,7 +8,7 @@
     <artifactId>Servlet2Spring</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Servlet2Spring</name>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -255,11 +255,11 @@
             <classifier>jakarta</classifier>
         </dependency>
 
-        <!-- SpringDoc OpenAPI Starter WebMVC UI  -->
+        <!-- SpringDoc OpenAPI Starter WebMVC UI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.8.8</version>
+            <version>2.5.0</version>
         </dependency>
     </dependencies>
 
@@ -294,7 +294,6 @@
                     <generatedSourcesDirectory>${project.build.directory}/generated-sources/java</generatedSourcesDirectory>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>
