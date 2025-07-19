@@ -7,6 +7,10 @@ import org.servlet2spring.todo.domain.Reply;
 import org.servlet2spring.todo.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Log4j2
 @SpringBootTest
@@ -29,5 +33,17 @@ public class ReplyRepositoryTests {
             .build();
 
     replyRepository.save(reply);
+  }
+
+  @Test
+  public void testBoardReplies() {
+    Long bno = 100L;
+
+    Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
+    Page<Reply> result = replyRepository.listOfBoard(bno, pageable);
+
+    result.getContent().forEach(reply -> {
+      log.info(reply);
+    });
   }
 }
