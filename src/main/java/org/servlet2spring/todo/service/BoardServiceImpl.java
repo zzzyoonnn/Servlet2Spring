@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.servlet2spring.todo.domain.Board;
 import org.servlet2spring.todo.dto.BoardDTO;
+import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
 import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.dto.PageResponseDTO;
 import org.servlet2spring.todo.repository.BoardRepository;
@@ -71,6 +72,21 @@ public class BoardServiceImpl implements BoardService {
     return PageResponseDTO.<BoardDTO>withAll()
             .pageRequestDTO(pageRequestDTO)
             .dtoList(dtoList)
+            .total((int)result.getTotalElements())
+            .build();
+  }
+
+  @Override
+  public PageResponseDTO<BoardListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO) {
+    String[] types = pageRequestDTO.getTypes();
+    String keyword = pageRequestDTO.getKeyword();
+    Pageable pageable = pageRequestDTO.getPageable("bno");
+
+    Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable);
+
+    return PageResponseDTO.<BoardListReplyCountDTO>withAll()
+            .pageRequestDTO(pageRequestDTO)
+            .dtoList(result.getContent())
             .total((int)result.getTotalElements())
             .build();
   }
