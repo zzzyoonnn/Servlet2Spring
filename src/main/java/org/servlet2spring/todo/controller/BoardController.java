@@ -13,11 +13,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Log4j2
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
@@ -37,6 +37,7 @@ public class BoardController {
 
   }
 
+  @ResponseBody
   @PostMapping("/register")
   public String registerPost(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
     log.info("board POST register");
@@ -65,6 +66,7 @@ public class BoardController {
   }
 
   // 수정 기능
+  @ResponseBody
   @PostMapping("/modify")
   public String modify(PageRequestDTO pageRequestDTO, @Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
     log.info("board modify post: " + boardDTO);
@@ -85,6 +87,7 @@ public class BoardController {
   }
 
   // 삭제 기능
+  @ResponseBody
   @PostMapping("/remove")
   public String remove(Long bno, RedirectAttributes redirectAttributes) {
     log.info("remove post: " + bno);
