@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.dto.BoardDTO;
+import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
 import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.dto.PageResponseDTO;
 import org.servlet2spring.todo.service.BoardService;
@@ -26,7 +27,8 @@ public class BoardController {
   // 목록 기능
   @GetMapping("/list")
   public void list(PageRequestDTO pageRequestDTO, Model model) {
-    PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+    // PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+    PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
     log.info(responseDTO);
     model.addAttribute("responseDTO", responseDTO);
   }
