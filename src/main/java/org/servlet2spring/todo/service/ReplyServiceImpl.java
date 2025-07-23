@@ -1,5 +1,6 @@
 package org.servlet2spring.todo.service;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -22,5 +23,13 @@ public class ReplyServiceImpl implements ReplyService {
     Long rno = replyRepository.save(reply).getRno();
 
     return rno;
+  }
+
+  @Override
+  public ReplyDTO read(Long rno) {
+    Optional<Reply> replyOptional = replyRepository.findById(rno);
+    Reply reply = replyOptional.orElseThrow();
+
+    return modelMapper.map(reply, ReplyDTO.class);
   }
 }
