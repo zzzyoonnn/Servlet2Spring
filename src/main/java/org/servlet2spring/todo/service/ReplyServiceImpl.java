@@ -40,4 +40,9 @@ public class ReplyServiceImpl implements ReplyService {
     reply.changeText(replyDTO.getReplyText());
     replyRepository.save(reply);
   }
+
+  @Override
+  public void remove(Long rno) {
+    replyRepository.deleteById(rno);
+  }
 }

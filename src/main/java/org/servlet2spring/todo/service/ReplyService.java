@@ -9,4 +9,6 @@ public interface ReplyService {
   ReplyDTO read(Long rno);
 
   void modify(ReplyDTO replyDTO);
+
+  void remove(Long rno);
 }
