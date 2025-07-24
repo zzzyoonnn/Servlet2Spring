@@ -58,4 +58,17 @@ public class ReplyController {
 
     return replyDTO;
   }
+
+  // 특정 댓글 수정
+  @ResponseBody
+  @Operation(summary = "Modify Reply", description = "PUT 방식으로 특정 댓글 수정")
+  @PostMapping(value = "/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public Map<String, Long> remove(@PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO) {
+    replyDTO.setRno(rno);
+    replyService.modify(replyDTO);
+    Map<String, Long> resultMap = new HashMap<>();
+    resultMap.put("rno", rno);
+
+    return resultMap;
+  }
 }
