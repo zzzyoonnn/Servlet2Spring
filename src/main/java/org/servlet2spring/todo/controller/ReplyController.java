@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,9 +64,21 @@ public class ReplyController {
   @ResponseBody
   @Operation(summary = "Modify Reply", description = "PUT 방식으로 특정 댓글 수정")
   @PostMapping(value = "/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public Map<String, Long> remove(@PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO) {
+  public Map<String, Long> modify(@PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO) {
     replyDTO.setRno(rno);
     replyService.modify(replyDTO);
+    Map<String, Long> resultMap = new HashMap<>();
+    resultMap.put("rno", rno);
+
+    return resultMap;
+  }
+
+  // 특정 댓글 삭제
+  @ResponseBody
+  @Operation(summary = "Delete Reply", description = "DELETE 방식으로 특정 댓글 삭제")
+  @DeleteMapping("/{rno}")
+  public Map<String, Long> remove(@PathVariable("rno") Long rno) {
+    replyService.remove(rno);
     Map<String, Long> resultMap = new HashMap<>();
     resultMap.put("rno", rno);
 
