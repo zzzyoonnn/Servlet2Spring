@@ -2,6 +2,7 @@ package org.servlet2spring.todo.controller.advice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ public class CustomRestAdvice {
     return ResponseEntity.badRequest().body(errorMap);
   }
 
+  // 데이터 무결성 오류 대응
   @ExceptionHandler(DataIntegrityViolationException.class)
   @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
   public ResponseEntity<Map<String, String>> handleFKException(Exception e) {
@@ -42,6 +44,20 @@ public class CustomRestAdvice {
     Map<String, String> errorMap = new HashMap<>();
     errorMap.put("time", ""+System.currentTimeMillis());
     errorMap.put("message", "constraint fails");
+
+    return ResponseEntity.badRequest().body(errorMap);
+  }
+
+  // 댓글이 존재하지 않을 경우
+  @ExceptionHandler(NoSuchElementException.class)
+  @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
+  public ResponseEntity<Map<String, String>> handleNoSuchElement(Exception e) {
+    log.error(e);
+
+    Map<String, String> errorMap = new HashMap<>();
+
+    errorMap.put("time", ""+System.currentTimeMillis());
+    errorMap.put("message", "No Such Element Exception");
 
     return ResponseEntity.badRequest().body(errorMap);
   }
