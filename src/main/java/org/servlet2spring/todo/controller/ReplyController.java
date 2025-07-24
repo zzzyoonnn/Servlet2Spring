@@ -74,14 +74,24 @@ public class ReplyController {
   }
 
   // 특정 댓글 삭제
-  @ResponseBody
-  @Operation(summary = "Delete Reply", description = "DELETE 방식으로 특정 댓글 삭제")
-  @DeleteMapping("/{rno}")
-  public Map<String, Long> remove(@PathVariable("rno") Long rno) {
-    replyService.remove(rno);
-    Map<String, Long> resultMap = new HashMap<>();
-    resultMap.put("rno", rno);
+//  @ResponseBody
+//  @Operation(summary = "Delete Reply", description = "DELETE 방식으로 특정 댓글 삭제")
+//  @DeleteMapping("/{rno}")
+//  public Map<String, Long> remove(@PathVariable("rno") Long rno) {
+//    replyService.remove(rno);
+//    Map<String, Long> resultMap = new HashMap<>();
+//    resultMap.put("rno", rno);
+//
+//    return resultMap;
+//  }
 
-    return resultMap;
+  // 특정 게시물의 댓글 목록
+  @Operation(summary = "Replies of Board", description = "GET 방식으로 특정 게시물의 댓글 목록")
+  @GetMapping("/list/{bno}")
+  @ResponseBody
+  public PageResponseDTO<ReplyDTO> getList(@PathVariable("bno") Long bno, PageRequestDTO pageRequestDTO) {
+    PageResponseDTO<ReplyDTO> responseDTO = replyService.getListOfBoard(bno, pageRequestDTO);
+
+    return responseDTO;
   }
 }
