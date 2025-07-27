@@ -80,7 +80,11 @@
     <script src="/js/reply.js"></script>
 </div>
 
-<script layout:fragment="script" th:inline="javascript"></script>
+<script layout:fragment="script" th:inline="javascript">
+    const bno = [[${dto.bno}]];
+
+    get1(bno)
+</script>
 <body>
 
 </body>
