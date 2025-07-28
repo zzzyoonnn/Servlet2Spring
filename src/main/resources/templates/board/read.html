@@ -77,6 +77,31 @@
         </div>
     </div>
 
+    <div class="modal registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register Reply</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Reply Text</span>
+                        <input type="text" class="form-control modalReplyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Replier</span>
+                        <input type="text" class="form-control modalReplier">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary registerBtn">Register</button>
+                    <button type="button" class="btn btn-outline-dark closeRegisterBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/reply.js"></script>
 </div><!-- end layout fragment -->
@@ -120,7 +145,7 @@
         }
 
         for (let i = data.start; i <= data.end; i++) {
-            pageStr += `<li class="page-item" ${i == data.page?"active":""} "><a class="page-link" data-page="${i}">${i}</a></li>`
+            pageStr += `<li class="page-item ${i==data.page?"active":""} "><a class="page-link" data-page="${i}">${i}</a></li>`
         }
 
         if (data.next) {
@@ -135,15 +160,55 @@
         getList({bno, page, size, goLast}).then(
             // data => {console.log(data)}
             data => {
+                console.log("getList data", data) // 여기도 찍어보세요
                 printList(data.dtoList) // 목록 처리
                 printPages(data)    // 페이지 처리
             }
+
         ).catch(e => {
             console.error(e);
         })
     }
 
     printReplies(1, 10, true);
+
+    // 댓글 등록 모달
+    const registerModal = new bootstrap.Modal(document.querySelector(".registerModal"))
+
+    // registerModal
+    const registerBtn = document.querySelector(".registerBtn")
+    const closeRegisterBtn = document.querySelector(".closeRegisterBtn")
+
+    document.querySelector(".addReplyBtn").addEventListener("click", function (e){
+        registerModal.show()
+    }, false)
+
+    closeRegisterBtn.addEventListener("click", function (e){
+        registerModal.hide()
+    }, false)
+
+    registerBtn.addEventListener("click", function (e){
+        const replyText = document.querySelector(".modalReplyText")
+        const replier = document.querySelector(".modalReplier")
+
+        const replyObj = {
+            bno:bno,
+            replyText:replyText.value,
+            replier:replier.value
+        }
+        console.log(replyObj)
+
+        addReply(replyObj).then(result => {
+            alert(result.rno)
+            console.log(replyObj)
+            registerModal.hide()
+            replyText.value=''
+            replier.value=''
+            printReplies(1, 10, true)   // 댓글 목록 갱신
+        }).catch(e => {
+            alert("Exception...")
+        })
+    }, false)
 
 </script>
 <body>
