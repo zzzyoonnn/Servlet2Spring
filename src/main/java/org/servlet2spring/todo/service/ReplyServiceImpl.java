@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.servlet2spring.todo.domain.Board;
 import org.servlet2spring.todo.domain.Reply;
 import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.dto.PageResponseDTO;
@@ -28,6 +29,8 @@ public class ReplyServiceImpl implements ReplyService {
   @Override
   public Long register(ReplyDTO replyDTO) {
     Reply reply = modelMapper.map(replyDTO, Reply.class);
+    Board board = Board.builder().bno(replyDTO.getBno()).build();
+    reply.setBoard(board);
     Long rno = replyRepository.save(reply).getRno();
 
     return rno;
