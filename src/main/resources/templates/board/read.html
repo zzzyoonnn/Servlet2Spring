@@ -285,6 +285,7 @@
         }).catch(e => alert('error'))
     }, false)
 
+    // 댓글 수정
     modifyBtn.addEventListener("click", function(e) {
         const replyObj = {
             bno:bno,
@@ -305,6 +306,21 @@
 
     closeModifyBtn.addEventListener("click", function (e){
         modifyModal.hide()
+    }, false)
+
+    // 댓글 삭제
+    removeBtn.addEventListener("click", function(e) {
+        removeReply(replyHeader.innerHTML).then(result => {
+            alert(result.rno + ` 댓글이 삭제되었습니다.`)
+            modifyText.value = ''
+            modifyModal.hide()
+
+            page = 1
+
+            printReplies(page, size)
+        }).catch(e => {
+            console.log(e)
+        })
     }, false)
 
 </script>
