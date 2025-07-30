@@ -26,6 +26,13 @@ async function addReply(replyObj) {
 // 댓글 조회
 async function getReply(rno) {
     const response = await axios.get(`/replies/${rno}`)
-    
+
+    return response.data
+}
+
+// 댓글 수정
+async function modifyReply(replyObj) {
+    const response = await axios.put(`/replies/${replyObj.rno}`, replyObj)
+
     return response.data
 }

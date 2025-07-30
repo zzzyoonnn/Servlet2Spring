@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,7 +64,7 @@ public class ReplyController {
   // 특정 댓글 수정
   @ResponseBody
   @Operation(summary = "Modify Reply", description = "PUT 방식으로 특정 댓글 수정")
-  @PostMapping(value = "/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PutMapping(value = "/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public Map<String, Long> modify(@PathVariable("rno") Long rno, @RequestBody ReplyDTO replyDTO) {
     replyDTO.setRno(rno);
     replyService.modify(replyDTO);
