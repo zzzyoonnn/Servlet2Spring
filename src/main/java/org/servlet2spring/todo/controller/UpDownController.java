@@ -3,7 +3,10 @@ package org.servlet2spring.todo.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -26,10 +29,13 @@ public class UpDownController {
 
     if (files != null) {
       files.forEach(file -> {
+      String fileName = file.getOriginalFilename();
+      String uuid = UUID.randomUUID().toString();
 
-        String savePath = uploadPath + file.getOriginalFilename();
+      Path savePath = Paths.get(uploadPath, uuid + "" + fileName);
+
         try {
-          file.transferTo(new File(savePath));
+          file.transferTo(new File(String.valueOf(savePath))); // 실제 파일 저장
           log.info(file.getOriginalFilename());
 
         } catch (IOException e) {
