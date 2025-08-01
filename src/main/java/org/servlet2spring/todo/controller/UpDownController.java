@@ -1,6 +1,8 @@
 package org.servlet2spring.todo.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +26,15 @@ public class UpDownController {
 
     if (files != null) {
       files.forEach(file -> {
-        log.info(file.getOriginalFilename());
+
+        String savePath = uploadPath + file.getOriginalFilename();
+        try {
+          file.transferTo(new File(savePath));
+          log.info(file.getOriginalFilename());
+
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       });
     }
 
