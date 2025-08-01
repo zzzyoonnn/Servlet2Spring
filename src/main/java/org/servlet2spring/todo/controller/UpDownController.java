@@ -14,10 +14,19 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class UpDownController {
 
+  @Value("${org.servlet2spring.upload.path}")
+  private String uploadPath;
+
   @Operation(summary = "Upload POST", description = "POST 방식으로 파일 등록")
   @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public String upload(@RequestPart("files") List<MultipartFile> files) {
     log.info("Uploaded files: {}", files);
+
+    if (files != null) {
+      files.forEach(file -> {
+        log.info(file.getOriginalFilename());
+      });
+    }
 
     return null;
   }
