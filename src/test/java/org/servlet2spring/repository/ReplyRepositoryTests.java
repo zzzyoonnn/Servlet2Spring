@@ -22,14 +22,14 @@ public class ReplyRepositoryTests {
   @Test
   public void testInsert() {
     // 실제 DB에 있는 bno
-    Long bno = 100L;
+    Long bno = 305L;
 
     Board board = Board.builder().bno(bno).build();
 
     Reply reply = Reply.builder()
             .board(board)
-            .replyText("reply repository test")
-            .replyer("replier1")
+            .replyText("test-abc")
+            .replier("user-123")
             .build();
 
     replyRepository.save(reply);
