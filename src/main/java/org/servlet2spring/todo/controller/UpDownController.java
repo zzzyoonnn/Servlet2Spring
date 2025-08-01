@@ -3,6 +3,7 @@ package org.servlet2spring.todo.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,7 +12,14 @@ import java.util.UUID;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.dto.upload.UploadResultDTO;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,5 +64,21 @@ public class UpDownController {
     }
 
     return null;
+  }
+
+  @Operation(summary = "첨부파일 조회", description = "GET 방식으로 첨부파일 조회")
+  @GetMapping("/view/{fileName}")
+  public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName) {
+    Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+    HttpHeaders headers = new HttpHeaders();
+
+    try {
+      headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
+
+    } catch (IOException e) {
+      return ResponseEntity.internalServerError().build();
+    }
+
+    return ResponseEntity.ok().headers(headers).body(resource);
   }
 }
