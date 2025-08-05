@@ -1,7 +1,9 @@
 package org.servlet2spring.todo.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,8 +42,27 @@ public class Board extends BaseEntity {
     this.content = content;
   }
 
-  @OneToMany(mappedBy = "board")  // BoardImage의 board 변수
+  @OneToMany(mappedBy = "board",  // BoardImage의 board 변수
+          cascade = {CascadeType.ALL},
+          fetch = FetchType.LAZY)
   @Builder.Default
   private Set<BoardImage> imageSet = new HashSet<>();
+
+  public void addImage(String uuid, String fileName) {
+    BoardImage boardImage = BoardImage.builder()
+            .uuid(uuid)
+            .fileName(fileName)
+            .board(this)
+            .ord(imageSet.size())
+            .build();
+
+    imageSet.add(boardImage);
+  }
+
+  public void clearImages() {
+    imageSet.forEach(boardImage -> boardImage.changeBoard(null));
+
+    this.imageSet.clear();
+  }
 
 }
