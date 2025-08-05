@@ -2,6 +2,7 @@ package org.servlet2spring.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.IntStream;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -127,5 +128,20 @@ public class BoardRepositoryTests {
     log.info(result.hasPrevious() + ": " + result.hasNext());
 
     result.getContent().forEach(board -> log.info(board));
+  }
+
+  @Test
+  public void testInsertWithImages() {
+    Board board = Board.builder()
+            .title("Image test")
+            .content("첨부파일 테스트")
+            .writer("tester")
+            .build();
+
+    for (int i = 0; i < 3; i++) {
+      board.addImage(UUID.randomUUID().toString(), "file" + i + ".jpg");
+    }
+
+    boardRepository.save(board);
   }
 }
