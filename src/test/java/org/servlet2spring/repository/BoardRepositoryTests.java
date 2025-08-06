@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.servlet2spring.todo.domain.Board;
+import org.servlet2spring.todo.domain.BoardImage;
 import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
 import org.servlet2spring.todo.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,5 +144,21 @@ public class BoardRepositoryTests {
     }
 
     boardRepository.save(board);
+  }
+
+  @Test
+  public void testReadWithImages() {
+
+    // 반드시 존재하는 bno로 확인
+    Optional<Board> result = boardRepository.findByIdWithImages(1L);
+
+    Board board = result.orElseThrow();
+
+    log.info(board);
+    log.info("------------------------------");
+//    log.info(board.getImageSet());
+    for (BoardImage boardImage : board.getImageSet()) {
+      log.info(boardImage);
+    }
   }
 }
