@@ -1,5 +1,6 @@
 package org.servlet2spring.repository;
 
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 
 @Log4j2
 @SpringBootTest
@@ -146,6 +148,7 @@ public class BoardRepositoryTests {
     boardRepository.save(board);
   }
 
+  // board 조회 시, 이미지 조회 기능 테스트
   @Test
   public void testReadWithImages() {
 
@@ -160,5 +163,24 @@ public class BoardRepositoryTests {
     for (BoardImage boardImage : board.getImageSet()) {
       log.info(boardImage);
     }
+  }
+
+  // 특정 게시물의 첨부파일 수정
+  @Transactional
+  @Commit
+  @Test
+  public void testModifyImages() {
+    Optional<Board> result = boardRepository.findByIdWithImages(1L);
+    Board board = result.orElseThrow();
+
+    // 기존의 첨부파일 삭제
+    board.clearImages();
+
+    // 새로운 첨부파일
+    for (int i = 0; i < 2; i++) {
+      board.addImage(UUID.randomUUID().toString(), "updatefile" + i + ".jpg");
+    }
+
+    boardRepository.save(board);
   }
 }
