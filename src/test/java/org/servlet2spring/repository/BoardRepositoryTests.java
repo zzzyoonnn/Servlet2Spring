@@ -11,6 +11,7 @@ import org.servlet2spring.todo.domain.Board;
 import org.servlet2spring.todo.domain.BoardImage;
 import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
 import org.servlet2spring.todo.repository.BoardRepository;
+import org.servlet2spring.todo.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,9 @@ public class BoardRepositoryTests {
 
   @Autowired
   private BoardRepository boardRepository;
+
+  @Autowired
+  private ReplyRepository replyRepository;
 
   @Test
   public void testInsert() {
@@ -182,5 +186,16 @@ public class BoardRepositoryTests {
     }
 
     boardRepository.save(board);
+  }
+
+  @Test
+  @Transactional
+  @Commit
+  public void testRemoveAll() {
+    Long bno = 1L;
+
+    replyRepository.deleteByBoard_Bno(bno);
+
+    boardRepository.deleteById(bno);
   }
 }
