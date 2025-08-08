@@ -1,10 +1,9 @@
-package org.servlet2spring.todo.search;
+package org.servlet2spring.todo.repository.search;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
 import java.util.List;
-import org.hibernate.annotations.DialectOverride.SQLRestriction;
 import org.servlet2spring.todo.domain.Board;
 import org.servlet2spring.todo.domain.QBoard;
 import org.servlet2spring.todo.domain.QReply;

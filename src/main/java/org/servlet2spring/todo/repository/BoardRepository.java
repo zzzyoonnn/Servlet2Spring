@@ -4,7 +4,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.apache.ibatis.annotations.Param;
 import org.servlet2spring.todo.domain.Board;
-import org.servlet2spring.todo.search.BoardSearch;
+import org.servlet2spring.todo.repository.search.BoardSearch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

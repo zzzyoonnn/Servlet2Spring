@@ -1,4 +1,4 @@
-package org.servlet2spring.todo.search;
+package org.servlet2spring.todo.repository.search;
 
 import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
 import org.springframework.data.domain.Pageable;
