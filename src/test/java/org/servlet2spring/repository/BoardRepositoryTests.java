@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.servlet2spring.todo.domain.Board;
 import org.servlet2spring.todo.domain.BoardImage;
+import org.servlet2spring.todo.dto.BoardListAllDTO;
 import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
 import org.servlet2spring.todo.repository.BoardRepository;
 import org.servlet2spring.todo.repository.ReplyRepository;
@@ -205,6 +206,13 @@ public class BoardRepositoryTests {
 
     Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
 
-    boardRepository.searchWithAll(null, null, pageable);
+    //boardRepository.searchWithAll(null, null, pageable);
+
+    Page<BoardListAllDTO> result = boardRepository.searchWithAll(null, null, pageable);
+
+    log.info("---------------------");
+    log.info(result.getTotalElements());
+
+    result.getContent().forEach(boardListAllDTO -> log.info(boardListAllDTO));
   }
 }

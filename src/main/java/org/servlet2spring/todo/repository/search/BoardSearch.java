@@ -1,5 +1,6 @@
 package org.servlet2spring.todo.repository.search;
 
+import org.servlet2spring.todo.dto.BoardListAllDTO;
 import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
 import org.springframework.data.domain.Pageable;
 import org.servlet2spring.todo.domain.Board;
@@ -12,5 +13,5 @@ public interface BoardSearch {
 
   Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable);
 
-  Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable);
+  Page<BoardListAllDTO> searchWithAll(String[] types, String keyword, Pageable pageable);
 }

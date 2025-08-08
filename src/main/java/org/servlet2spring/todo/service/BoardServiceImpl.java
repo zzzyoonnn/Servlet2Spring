@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.servlet2spring.todo.domain.Board;
 import org.servlet2spring.todo.dto.BoardDTO;
+import org.servlet2spring.todo.dto.BoardListAllDTO;
 import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
 import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.dto.PageResponseDTO;
@@ -89,5 +90,10 @@ public class BoardServiceImpl implements BoardService {
             .dtoList(result.getContent())
             .total((int)result.getTotalElements())
             .build();
+  }
+
+  @Override
+  public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
+    return null;
   }
 }
