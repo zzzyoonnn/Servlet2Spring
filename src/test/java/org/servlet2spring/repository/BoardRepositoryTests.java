@@ -198,4 +198,13 @@ public class BoardRepositoryTests {
 
     boardRepository.deleteById(bno);
   }
+
+  @Test
+  @Transactional
+  public void testSearchImageReplyCount() {
+
+    Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+
+    boardRepository.searchWithAll(null, null, pageable);
+  }
 }

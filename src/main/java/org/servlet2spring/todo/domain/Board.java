@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Getter
@@ -47,6 +48,7 @@ public class Board extends BaseEntity {
           fetch = FetchType.LAZY,
           orphanRemoval = true)
   @Builder.Default
+  @BatchSize(size = 20)
   private Set<BoardImage> imageSet = new HashSet<>();
 
   public void addImage(String uuid, String fileName) {
@@ -65,6 +67,4 @@ public class Board extends BaseEntity {
 
     this.imageSet.clear();
   }
-
-
 }
