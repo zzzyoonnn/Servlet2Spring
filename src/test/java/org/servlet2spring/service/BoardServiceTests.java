@@ -1,10 +1,13 @@
 package org.servlet2spring.service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.servlet2spring.todo.dto.BoardDTO;
+import org.servlet2spring.todo.dto.BoardImageDTO;
+import org.servlet2spring.todo.dto.BoardListAllDTO;
 import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.dto.PageResponseDTO;
 import org.servlet2spring.todo.service.BoardService;
@@ -100,5 +103,29 @@ public class BoardServiceTests {
     Long bno = 101L;
 
     boardService.remove(bno);
+  }
+
+  @Test
+  public void testListWithAll() {
+    PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+            .page(1)
+            .size(10)
+            .build();
+
+    PageResponseDTO<BoardListAllDTO> responseDTO = boardService.listWithAll(pageRequestDTO);
+
+    List<BoardListAllDTO> dtoList = responseDTO.getDtoList();
+
+    dtoList.forEach(boardListAllDTO -> {
+      log.info(boardListAllDTO.getBno()+":"+boardListAllDTO.getTitle());
+
+      if (boardListAllDTO.getBoardImages() != null) {
+        for (BoardImageDTO boardImage : boardListAllDTO.getBoardImages()) {
+          log.info(boardImage);
+        }
+      }
+
+      log.info("---------------------");
+    });
   }
 }
