@@ -94,4 +94,11 @@ public class BoardServiceTests {
       log.info(fileName);
     }
   }
+
+  @Test
+  public void testRemoveAll() {
+    Long bno = 101L;
+
+    boardService.remove(bno);
+  }
 }
