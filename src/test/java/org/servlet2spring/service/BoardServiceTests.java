@@ -35,12 +35,15 @@ public class BoardServiceTests {
 
   @Test
   public void testModify() {
-    // 변경에 필요한 데이터만 작성
+    // 변경에 필요한 데이터
     BoardDTO boardDTO = BoardDTO.builder()
             .bno(101L)
             .title("test modify")
             .content("test test")
             .build();
+
+    // 첨부파일 추가
+    boardDTO.setFileNames(Arrays.asList(UUID.randomUUID()+"_zzz.jpg"));
 
     boardService.modify(boardDTO);
   }
