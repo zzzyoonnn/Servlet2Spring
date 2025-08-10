@@ -1,5 +1,6 @@
 package org.servlet2spring.todo.service;
 
+import org.servlet2spring.todo.domain.Board;
 import org.servlet2spring.todo.dto.BoardDTO;
 import org.servlet2spring.todo.dto.BoardListAllDTO;
 import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
@@ -21,4 +22,22 @@ public interface BoardService {
 
   // 게시글의 이미지와 댓글 수까지 처리
   PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO);
+
+  default Board dtoToEntity(BoardDTO boardDTO) {
+    Board board = Board.builder()
+            .bno(boardDTO.getBno())
+            .title(boardDTO.getTitle())
+            .content(boardDTO.getContent())
+            .writer(boardDTO.getWriter())
+            .build();
+
+    if (boardDTO.getFileNames() != null) {
+      boardDTO.getFileNames().forEach(fileName -> {
+        String[] arr = fileName.split("_");
+        board.addImage(arr[0], arr[1]);
+      });
+    }
+
+    return board;
+  }
 }

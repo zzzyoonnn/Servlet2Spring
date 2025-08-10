@@ -3,6 +3,7 @@ package org.servlet2spring.todo.dto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,4 +30,5 @@ public class BoardDTO {
   private LocalDateTime regDate;
   private LocalDateTime modDate;
 
+  private List<String> fileNames;
 }
