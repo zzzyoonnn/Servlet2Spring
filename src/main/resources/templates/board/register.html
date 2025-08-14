@@ -97,10 +97,59 @@
     // 업로드 모달
     const uploadModal = new bootstrap.Modal(document.querySelector(".uploadModal"))
 
+    const uploadModalEl = document.querySelector(".uploadModal");
+
+    // 모달이 완전히 닫혔을 때 포커스를 이동
+    uploadModalEl.addEventListener('hidden.bs.modal', function () {
+        document.querySelector(".uploadFileBtn").focus();
+    });
+
     document.querySelector(".uploadFileBtn").addEventListener("click", function(e) {
         e.stopPropagation()
         e.preventDefault()
         uploadModal.show()
+    }, false)
+
+    document.querySelector(".uploadBtn").addEventListener("click", function(e) {
+        const formObj = new FormData();
+        const fileInput = document.querySelector("input[name='files']")
+
+        console.log(fileInput.files)
+
+        const files = fileInput.files
+        for (let i = 0; i < files.length; i++) {
+            formObj.append("files", files[i])
+        }
+
+        const uploadResult = document.querySelector(".uploadResult")
+
+        function showUploadFile({uuid, fileName, link}) {
+            const str = `<div class="card col-4">
+<div class="card-header d-flex justify-content-center">
+${fileName}
+<button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}', '${fileName}', this)">X</button>
+</div>
+<div class="card-body">
+<img src="/view/${link}" data-src="${uuid+"_"+fileName}" style="width: auto; height: 150px; display: block; object-fit: contain;">
+</div>
+</div><!-- card -->`
+
+            uploadResult.innerHTML += str
+        }
+
+        uploadToServer(formObj).then(result => {
+            // console.log(result)
+            for (const uploadResult of result) {
+                showUploadFile(uploadResult)
+            }
+            // document.querySelector(".uploadFileBtn").focus();
+            uploadModal.hide()
+        }).catch(e => {
+            // document.querySelector(".uploadFileBtn").focus();
+            uploadModal.hide()
+        })
+
+
     }, false)
 
 </script>

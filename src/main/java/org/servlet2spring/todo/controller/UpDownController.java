@@ -48,7 +48,7 @@ public class UpDownController {
         String fileName = file.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
 
-        Path savePath = Paths.get(uploadPath, uuid + "" + fileName);
+        Path savePath = Paths.get(uploadPath, uuid + "_" + fileName);
 
         try {
           file.transferTo(new File(String.valueOf(savePath))); // 실제 파일 저장
@@ -75,6 +75,7 @@ public class UpDownController {
   @GetMapping("/view/{fileName}")
   public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName) {
     Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+//    String resourceName = resource.getFilename();
     HttpHeaders headers = new HttpHeaders();
 
     try {
