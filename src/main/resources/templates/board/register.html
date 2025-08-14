@@ -110,6 +110,17 @@
         uploadModal.show()
     }, false)
 
+    function removeFile(link, obj) {
+        console.log(link)
+
+        const targetDiv = obj.closest(".card")
+
+        removeFileToServer(link).then(data => {
+            targetDiv.remove()
+        })
+    }
+
+
     document.querySelector(".uploadBtn").addEventListener("click", function(e) {
         const formObj = new FormData();
         const fileInput = document.querySelector("input[name='files']")
@@ -127,7 +138,7 @@
             const str = `<div class="card col-4">
 <div class="card-header d-flex justify-content-center">
 ${fileName}
-<button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}', '${fileName}', this)">X</button>
+<button class="btn-sm btn-danger" onclick="javascript:removeFile('${link}', this)">X</button>
 </div>
 <div class="card-body">
 <img src="/view/${link}" data-src="${uuid+"_"+fileName}" style="width: auto; height: 150px; display: block; object-fit: contain;">
@@ -138,17 +149,13 @@ ${fileName}
         }
 
         uploadToServer(formObj).then(result => {
-            // console.log(result)
             for (const uploadResult of result) {
                 showUploadFile(uploadResult)
             }
-            // document.querySelector(".uploadFileBtn").focus();
             uploadModal.hide()
         }).catch(e => {
-            // document.querySelector(".uploadFileBtn").focus();
             uploadModal.hide()
         })
-
 
     }, false)
 
