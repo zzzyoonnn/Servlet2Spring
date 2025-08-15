@@ -38,7 +38,7 @@
 
                         <div class="my-4">
                             <div class="float-end">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary submitBtn">Submit</button>
                                 <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </div>
@@ -110,14 +110,15 @@
         uploadModal.show()
     }, false)
 
-    function removeFile(link, obj) {
+    function removeFile(uuid, fileName, obj) {
         console.log("removeFile 실행")
-        console.log(link)
+        console.log(uuid)
+        console.log(fileName)
         console.log(obj)
 
         const targetDiv = obj.closest(".card")
 
-        removeFileToServer(link).then(data => {
+        removeFileToServer(uuid, fileName).then(data => {
             targetDiv.remove()
         })
     }
@@ -130,7 +131,7 @@
         const str = `<div class="card col-4">
 <div class="card-header d-flex justify-content-center">
 ${fileName}
-<button class="btn-sm btn-danger" onclick="javascript:removeFile('${link}', this)">X</button>
+<button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}', '${fileName}', this)">X</button>
 </div>
 <div class="card-body">
 <img src="/view/${link}" data-src="${uuid + "_" + fileName}" style="width: auto; height: 150px; display: block; object-fit: contain;">
@@ -162,6 +163,29 @@ ${fileName}
             uploadModal.hide()
         })
 
+    }, false)
+
+    document.querySelector(".submitBtn").addEventListener("click", function(e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        console.log("submitBtn clicked")
+
+        const target = document.querySelector(".uploadHidden")
+        const uploadFiles = uploadResult.querySelectorAll("img")
+
+        let str = ''
+
+        for (let i = 0; i < uploadFiles.length; i++) {
+            const uploadFile = uploadFiles[i]
+            const imgLink = uploadFile.getAttribute("data-src")
+
+            str += `<input type='hidden' name='fileNames' value="${imgLink}">`
+        }
+
+        target.innerHTML = str;
+
+        document.querySelector("form").submit()
     }, false)
 
 </script>

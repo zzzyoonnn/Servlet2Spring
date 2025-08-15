@@ -39,7 +39,7 @@ public class BoardController {
 
   }
 
-  @ResponseBody
+//  @ResponseBody
   @PostMapping("/register")
   public String registerPost(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
     log.info("board POST register");
@@ -68,7 +68,7 @@ public class BoardController {
   }
 
   // 수정 기능
-  @ResponseBody
+//  @ResponseBody
   @PostMapping("/modify")
   public String modify(PageRequestDTO pageRequestDTO, @Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
     log.info("board modify post: " + boardDTO);
@@ -89,7 +89,7 @@ public class BoardController {
   }
 
   // 삭제 기능
-  @ResponseBody
+//  @ResponseBody
   @PostMapping("/remove")
   public String remove(Long bno, RedirectAttributes redirectAttributes) {
     log.info("remove post: " + bno);
