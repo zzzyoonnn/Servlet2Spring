@@ -1,21 +1,26 @@
 package org.servlet2spring.todo.controller;
 
 import jakarta.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.dto.BoardDTO;
 import org.servlet2spring.todo.dto.BoardListAllDTO;
-import org.servlet2spring.todo.dto.BoardListReplyCountDTO;
 import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.dto.PageResponseDTO;
 import org.servlet2spring.todo.service.BoardService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Log4j2
@@ -23,6 +28,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
+
+  @Value("${org.servlet2spring.upload.path}")
+  private String uploadPath;
   private final BoardService boardService;
 
   // 목록 기능
@@ -37,13 +45,14 @@ public class BoardController {
 
   // 등록 기능
   @GetMapping("/register")
-  public void registerGet(){
+  public void registerGet() {
 
   }
 
-//  @ResponseBody
+  //  @ResponseBody
   @PostMapping("/register")
-  public String registerPost(@Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+  public String registerPost(@Valid BoardDTO boardDTO, BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
     log.info("board POST register");
 
     if (bindingResult.hasErrors()) {
@@ -72,7 +81,8 @@ public class BoardController {
   // 수정 기능
 //  @ResponseBody
   @PostMapping("/modify")
-  public String modify(PageRequestDTO pageRequestDTO, @Valid BoardDTO boardDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+  public String modify(PageRequestDTO pageRequestDTO, @Valid BoardDTO boardDTO, BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes) {
     log.info("board modify post: " + boardDTO);
 
     if (bindingResult.hasErrors()) {
@@ -93,10 +103,35 @@ public class BoardController {
   // 삭제 기능
 //  @ResponseBody
   @PostMapping("/remove")
-  public String remove(Long bno, RedirectAttributes redirectAttributes) {
+  public String remove(BoardDTO boardDTO, RedirectAttributes redirectAttributes) {
+    Long bno = boardDTO.getBno();
     log.info("remove post: " + bno);
     boardService.remove(bno);
+
+    // 게시물이 데이터베이스상에서 삭제되었다면 첨부파일 삭제
+    log.info(boardDTO.getFileNames());
+    List<String> fileNames = boardDTO.getFileNames();
+    if (fileNames != null && fileNames.size() > 0) {
+      removeFiles(fileNames);
+    }
+
     redirectAttributes.addFlashAttribute("result", "removed");
     return "redirect:/board/list";
+  }
+
+  public void removeFiles(List<String> files) {
+    for (String fileName : files) {
+      Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+
+      String resourceName = resource.getFilename();
+
+      try {
+        String contentType = Files.probeContentType(resource.getFile().toPath());
+
+        resource.getFile().delete();
+      } catch (Exception e) {
+        log.error(e.getMessage());
+      }
+    }
   }
 }
