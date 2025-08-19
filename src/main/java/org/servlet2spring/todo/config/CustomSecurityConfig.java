@@ -46,7 +46,7 @@ public class CustomSecurityConfig {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth ->
-                    auth.requestMatchers("/error", "/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                    auth.requestMatchers("/error", "/login", "/swagger-ui/**", "/v3/api-docs/**", "/board/**").permitAll()
                     .anyRequest().authenticated()
     );
 
