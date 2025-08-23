@@ -11,6 +11,8 @@ public class CustomServletConfig implements WebMvcConfigurer {
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/board/**").addResourceLocations("/resources/");
+    registry.addResourceHandler("/assets/**", "/css/**", "/js/**", "/upload/**")
+            .addResourceLocations("classpath:/static/assets/", "classpath:/static/css/", "classpath:/static/js/", "file:/Users/jiyoon/Documents/upload/");
+
   }
 }
