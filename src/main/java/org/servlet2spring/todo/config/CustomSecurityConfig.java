@@ -71,9 +71,11 @@ public class CustomSecurityConfig {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth ->
-                    auth.requestMatchers("/error", "/login", "/swagger-ui/**", "/v3/api-docs/**", "/board/**").permitAll()
-                    .anyRequest().authenticated()
-    );
+                    auth.requestMatchers("/error", "/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                            .requestMatchers("/assets/**","/css/**","/js/**").permitAll() // bootstrap
+                            .requestMatchers("/board/**", "/replies/**", "/view/**", "/upload/**").permitAll()  // board
+
+            );
 
     return http.build();
   }
