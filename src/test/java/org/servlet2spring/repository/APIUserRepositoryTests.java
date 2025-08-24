@@ -23,7 +23,7 @@ public class APIUserRepositoryTests {
   public void testInserts() {
     IntStream.rangeClosed(1, 100).forEach(i -> {
       APIUser apiUser = APIUser.builder()
-              .mid("apiUser: " + i)
+              .mid("apiuser" + i)
               .mpw(passwordEncoder.encode("1111"))
               .build();
 

@@ -74,6 +74,7 @@ public class CustomSecurityConfig {
                     auth.requestMatchers("/error", "/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                             .requestMatchers("/assets/**","/css/**","/js/**").permitAll() // bootstrap
                             .requestMatchers("/board/**", "/replies/**", "/view/**", "/upload/**").permitAll()  // board
+                            .requestMatchers("/", "/apiLogin", "/generateToken").permitAll()
 
             );
 

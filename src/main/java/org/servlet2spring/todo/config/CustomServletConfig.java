@@ -3,6 +3,7 @@ package org.servlet2spring.todo.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
@@ -14,5 +15,11 @@ public class CustomServletConfig implements WebMvcConfigurer {
     registry.addResourceHandler("/assets/**", "/css/**", "/js/**", "/upload/**")
             .addResourceLocations("classpath:/static/assets/", "classpath:/static/css/", "classpath:/static/js/", "file:/Users/jiyoon/Documents/upload/");
 
+  }
+
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    // /apiLogin → /apiLogin.html 매핑
+    registry.addViewController("/apiLogin").setViewName("forward:/apiLogin.html");
   }
 }
