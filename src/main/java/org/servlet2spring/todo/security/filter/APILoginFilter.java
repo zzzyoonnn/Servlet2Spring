@@ -1,4 +1,4 @@
-package org.servlet2spring.todo.filter;
+package org.servlet2spring.todo.security.filter;
 
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
