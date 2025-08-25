@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Map;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -33,7 +34,9 @@ public class APILoginFilter extends AbstractAuthenticationProcessingFilter {
     Map<String, String> jsonData = parseRequestJSON(request);
     log.info(jsonData);
 
-    return null;
+    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(jsonData.get("mid"), jsonData.get("mpw"));
+
+    return getAuthenticationManager().authenticate(authenticationToken);
   }
 
   private Map<String, String> parseRequestJSON(HttpServletRequest request) {
