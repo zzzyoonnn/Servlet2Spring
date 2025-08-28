@@ -1,10 +1,13 @@
 package org.servlet2spring.todo.util;
 
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.sql.Date;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -17,8 +20,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class JWTUtil {
 
-  @Value("${org.org.servlet2spring.jwt.secret}")
-  private String key;
+//  @Value("${org.org.servlet2spring.jwt.secret}")
+//  private String key;
+//
+  private final Key key;
+//
+//  public JWTUtil(@Value("${org.org.servlet2spring.jwt.secret}") String key) {
+//    this.key = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
+//  }
+
+  public JWTUtil(@Value("${org.org.servlet2spring.jwt.secret}") String secret) {
+    this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+  }
 
   public String generateToken(Map<String, Object> valueMap, int days) {
     log.info("generateKey : " + key);
@@ -40,15 +53,21 @@ public class JWTUtil {
             .claims(payloads)
             .issuedAt(Date.from(ZonedDateTime.now().toInstant()))
             .expiration(Date.from(ZonedDateTime.now().plusMinutes(time).toInstant()))
-            .signWith(Jwts.SIG.HS256.key().build())  // .signWith(SignatureAlgorithm.HS256, key.getBytes())
+//            .signWith(Jwts.SIG.HS256.key().build())  // .signWith(SignatureAlgorithm.HS256, key.getBytes())
+//            .signWith(key)
+            .signWith(key, SignatureAlgorithm.HS256)
             .compact();
 
     return jwtStr;
   }
 
   public Map<String, Object> validateToken(String token) throws JwtException {
-    Map<String, Object> claim = null;
+    Claims claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
 
-    return claim;
+    return claims;
   }
 }
