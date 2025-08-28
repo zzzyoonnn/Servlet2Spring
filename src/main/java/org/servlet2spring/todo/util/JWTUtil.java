@@ -62,7 +62,7 @@ public class JWTUtil {
   }
 
   public Map<String, Object> validateToken(String token) throws JwtException {
-    Claims claims = Jwts.parserBuilder()
+    Claims claims = Jwts.parser()
             .setSigningKey(key)
             .build()
             .parseClaimsJws(token)
