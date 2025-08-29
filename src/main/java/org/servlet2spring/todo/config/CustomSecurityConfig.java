@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.security.filter.APILoginFilter;
 import org.servlet2spring.todo.security.APIUserDetailsService;
+import org.servlet2spring.todo.security.filter.TokenCheckFilter;
 import org.servlet2spring.todo.security.handler.APILoginSuccessHandler;
 import org.servlet2spring.todo.util.JWTUtil;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -68,7 +69,8 @@ public class CustomSecurityConfig {
     apiLoginFilter.setAuthenticationSuccessHandler(successHandler); // SuccessHandler 세팅
 
     // APILoginFilter 위치 조정
-    http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
+    // api로 시작하는 모든 경로는 TokenCheckFilter 동작
+    http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
     http
             .csrf(csrf -> csrf.disable()) // Lambda DSL 사용
@@ -90,5 +92,9 @@ public class CustomSecurityConfig {
   @Bean
   public MethodSecurityExpressionHandler methodSecurityExpressionHandler() {
     return new DefaultMethodSecurityExpressionHandler();
+  }
+
+  private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil) {
+    return new TokenCheckFilter(jwtUtil);
   }
 }
