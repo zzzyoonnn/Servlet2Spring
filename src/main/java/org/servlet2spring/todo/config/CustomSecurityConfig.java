@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.security.filter.APILoginFilter;
 import org.servlet2spring.todo.security.APIUserDetailsService;
 import org.servlet2spring.todo.security.handler.APILoginSuccessHandler;
+import org.servlet2spring.todo.util.JWTUtil;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,7 @@ public class CustomSecurityConfig {
 
   // 주입
   private final APIUserDetailsService apiUserDetailsService;
+  private final JWTUtil jwtUtil;
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -62,7 +64,7 @@ public class CustomSecurityConfig {
     apiLoginFilter.setAuthenticationManager(authenticationManager);
 
     // APISuccessHandler
-    APILoginSuccessHandler successHandler = new APILoginSuccessHandler();
+    APILoginSuccessHandler successHandler = new APILoginSuccessHandler(jwtUtil);
     apiLoginFilter.setAuthenticationSuccessHandler(successHandler); // SuccessHandler 세팅
 
     // APILoginFilter 위치 조정
