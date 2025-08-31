@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import javax.crypto.SecretKey;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -20,14 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JWTUtil {
 
-//  @Value("${org.org.servlet2spring.jwt.secret}")
-//  private String key;
-//
-  private final Key key;
-//
-//  public JWTUtil(@Value("${org.org.servlet2spring.jwt.secret}") String key) {
-//    this.key = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
-//  }
+  private final SecretKey key;
 
   public JWTUtil(@Value("${org.org.servlet2spring.jwt.secret}") String secret) {
     this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
@@ -36,12 +30,6 @@ public class JWTUtil {
   public String generateToken(Map<String, Object> valueMap, int days) {
     log.info("generateKey : " + key);
 
-    // Header
-//    Map<String, Object> headers = new HashMap<>();
-//    headers.put("typ", "JWT");
-//    headers.put("alg", "HS256");
-
-    // payload
     Map<String, Object> payloads = new HashMap<>();
     payloads.putAll(valueMap);
 
@@ -49,12 +37,9 @@ public class JWTUtil {
     int time = (60 * 24) * days;  // 일 단위
 
     String jwtStr = Jwts.builder()
-            //.setHeader(headers)
             .claims(payloads)
             .issuedAt(Date.from(ZonedDateTime.now().toInstant()))
             .expiration(Date.from(ZonedDateTime.now().plusMinutes(time).toInstant()))
-//            .signWith(Jwts.SIG.HS256.key().build())  // .signWith(SignatureAlgorithm.HS256, key.getBytes())
-//            .signWith(key)
             .signWith(key, SignatureAlgorithm.HS256)
             .compact();
 
@@ -63,10 +48,12 @@ public class JWTUtil {
 
   public Map<String, Object> validateToken(String token) throws JwtException {
     Claims claims = Jwts.parser()
-            .setSigningKey(key)
+            .verifyWith(key)
             .build()
-            .parseClaimsJws(token)
-            .getBody();
+            .parseSignedClaims(token)
+            .getPayload();
+
+    log.info("Validating token: " + token);
 
     return claims;
   }

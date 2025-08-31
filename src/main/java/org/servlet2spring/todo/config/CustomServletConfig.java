@@ -12,14 +12,7 @@ public class CustomServletConfig implements WebMvcConfigurer {
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/assets/**", "/css/**", "/js/**", "/upload/**", "/apiLogin.html")
+    registry.addResourceHandler("/assets/**", "/css/**", "/js/**", "/upload/**", "/**", "/generateToken")
             .addResourceLocations("classpath:/static/assets/", "classpath:/static/css/", "classpath:/static/js/", "file:/Users/jiyoon/Documents/upload/", "classpath:/static/");
-
-  }
-
-  @Override
-  public void addViewControllers(ViewControllerRegistry registry) {
-    // /apiLogin → /apiLogin.html 매핑
-    registry.addViewController("/apiLogin").setViewName("forward:/apiLogin.html");
   }
 }
