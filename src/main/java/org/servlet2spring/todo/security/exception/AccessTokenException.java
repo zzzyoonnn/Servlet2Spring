@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.parameters.P;
 
 public class AccessTokenException extends RuntimeException {
 
@@ -28,11 +27,11 @@ public class AccessTokenException extends RuntimeException {
     }
 
     public int getStatus() {
-      return status;
+      return this.status;
     }
 
     public String getMsg() {
-      return msg;
+      return this.msg;
     }
   }
 
