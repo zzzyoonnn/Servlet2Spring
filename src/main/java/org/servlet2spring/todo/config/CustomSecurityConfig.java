@@ -75,7 +75,10 @@ public class CustomSecurityConfig {
 
     // APILoginFilter 위치 조정
     // api로 시작하는 모든 경로는 TokenCheckFilter 동작
-    http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+    // tokenCheckFilter(jwtUtil) 생성 후 토큰 생성이 안되는 문제 발생
+    http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
+    //http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
 
     http
 
@@ -94,6 +97,7 @@ public class CustomSecurityConfig {
                             .requestMatchers("/assets/**", "/css/**", "/js/**").permitAll() // bootstrap
                             .requestMatchers("/board/**", "/replies/**", "/view/**", "/upload/**").permitAll()  // board
                             .requestMatchers("/", "/apiLogin.html", "/apiLogin").permitAll()
+                            .requestMatchers("/api/**").permitAll()
                             .anyRequest().authenticated()   // 그 외 모든 경로는 인증이 필요
 
             );
