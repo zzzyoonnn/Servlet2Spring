@@ -1,5 +1,6 @@
 package org.servlet2spring.todo.config;
 
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.security.filter.APILoginFilter;
@@ -23,6 +24,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Log4j2
 @Configuration
@@ -52,7 +56,8 @@ public class CustomSecurityConfig {
     log.info("---------- filter chain ---------");
 
     // AuthenticationManager 설정
-    AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+    AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(
+            AuthenticationManagerBuilder.class);
 
     authenticationManagerBuilder.userDetailsService(apiUserDetailsService).passwordEncoder(passwordEncoder());
 
@@ -73,16 +78,23 @@ public class CustomSecurityConfig {
     http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
     http
-            .csrf(csrf -> csrf.disable()) // Lambda DSL 사용
-            .sessionManagement(session ->
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
+
+            // CSRF 비활성화 (JWT 사용 시 필요)
+            .csrf(config -> config.disable())
+
+            // CORS 설정 적용
+            .cors(config -> config.configurationSource(corsConfigurationSource()))
+
+            // 세션을 사용하지 않도록 설정 (STATELESS)
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+            // URL 별 접근 권한 설정
             .authorizeHttpRequests(auth ->
                     auth.requestMatchers("/error", "/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                            .requestMatchers("/assets/**","/css/**","/js/**").permitAll() // bootstrap
+                            .requestMatchers("/assets/**", "/css/**", "/js/**").permitAll() // bootstrap
                             .requestMatchers("/board/**", "/replies/**", "/view/**", "/upload/**").permitAll()  // board
                             .requestMatchers("/", "/apiLogin.html", "/apiLogin").permitAll()
-                            .anyRequest().authenticated()
+                            .anyRequest().authenticated()   // 그 외 모든 경로는 인증이 필요
 
             );
 
@@ -96,5 +108,20 @@ public class CustomSecurityConfig {
 
   private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil) {
     return new TokenCheckFilter(jwtUtil);
+  }
+
+  // CORS 설정
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOriginPatterns(Arrays.asList("*")); // 모든 출처 허용
+    configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH")); // 모든 HTTP 메서드 허용
+    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type")); // 허용 헤더 목록
+    configuration.setAllowCredentials(true); // 자격 증명 허용
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration); // 모든 경로에 CORS 설정 적용
+
+    return source;
   }
 }
