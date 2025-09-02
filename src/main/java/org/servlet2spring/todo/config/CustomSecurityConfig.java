@@ -75,9 +75,7 @@ public class CustomSecurityConfig {
 
     // APILoginFilter 위치 조정
     // api로 시작하는 모든 경로는 TokenCheckFilter 동작
-    // tokenCheckFilter(jwtUtil) 생성 후 토큰 생성이 안되는 문제 발생
-    http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
-    //http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
 
     http
