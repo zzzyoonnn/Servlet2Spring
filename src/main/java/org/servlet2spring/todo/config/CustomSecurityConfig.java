@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.security.filter.APILoginFilter;
 import org.servlet2spring.todo.security.APIUserDetailsService;
+import org.servlet2spring.todo.security.filter.RefreshTokenFilter;
 import org.servlet2spring.todo.security.filter.TokenCheckFilter;
 import org.servlet2spring.todo.security.handler.APILoginSuccessHandler;
 import org.servlet2spring.todo.util.JWTUtil;
@@ -76,8 +77,9 @@ public class CustomSecurityConfig {
     // APILoginFilter 위치 조정
     // api로 시작하는 모든 경로는 TokenCheckFilter 동작
     http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-//    http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
 
+    // refreshToken 호출 처리
+    http.addFilterBefore(new RefreshTokenFilter("/refreshToken", jwtUtil), TokenCheckFilter.class);
 
     http
 
