@@ -58,7 +58,7 @@ public class TokenCheckFilter extends OncePerRequestFilter {
           throws ServletException, IOException {
     String path = request.getRequestURI();
 
-    if (!path.startsWith("/api/")) {
+    if (!path.startsWith("/api/") && !path.startsWith("/generateToken")) {
       filterChain.doFilter(request, response);
       return;
     }
