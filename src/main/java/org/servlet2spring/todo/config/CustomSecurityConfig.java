@@ -76,6 +76,7 @@ public class CustomSecurityConfig {
 
     // APILoginFilter 위치 조정
     // api로 시작하는 모든 경로는 TokenCheckFilter 동작
+    http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
     http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
     // refreshToken 호출 처리
