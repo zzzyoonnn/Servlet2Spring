@@ -10,12 +10,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.servlet2spring.todo.security.exception.RefreshTokenException;
 import org.servlet2spring.todo.security.exception.RefreshTokenException.ErrorCase;
 import org.servlet2spring.todo.util.JWTUtil;
+import org.springframework.http.MediaType;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Log4j2
@@ -58,6 +61,43 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
     try {
       refreshClaims = checkRefreshToken(refreshToken);
       log.info(refreshClaims);
+
+      // 새로운 Access Token 발행
+
+      // Refresh Token의 유효 시간이 얼마 남지 않은 경우
+//      Integer exp = (Integer)refreshClaims.get("exp");
+      Long expLong = (Long) refreshClaims.get("exp");
+      Integer exp = expLong.intValue();
+
+      Date expTime = new Date(Instant.ofEpochMilli(exp).toEpochMilli() * 1000);
+      Date current = new Date(System.currentTimeMillis());
+
+      // 만료 시간과 현재 시간의 간격 계산
+      // 만약 3일 미만일 경우 Refresh Token도 다시 생성
+      long gapTime = (expTime.getTime() - current.getTime());
+
+      log.info("------------------------------");
+      log.info("current :" + current);
+      log.info("exp: " + expTime);
+      log.info("gap: " + gapTime);
+
+      String mid = (String)refreshClaims.get("mid");
+
+      // 여기에 도달했으면 무조건 Access Token 새로 생성
+      String accessTokenValue = jwtUtil.generateToken(Map.of("mid", mid), 1);
+      String refreshTokenValue = tokens.get("refreshToken");
+
+      // refreshToken이 3일도 안남았다면
+      if (gapTime < (1000 * 60 * 60 * 24  * 3)) {
+        log.info("new Refresh Token required...");
+        refreshTokenValue = jwtUtil.generateToken(Map.of("mid", mid), 1);
+      }
+
+      log.info("Refresh Token result --------------------");
+      log.info("accessToken: " + accessTokenValue);
+      log.info("refreshToken: " + refreshTokenValue);
+
+      sendTokens(accessTokenValue, refreshTokenValue, response);
 
     } catch (RefreshTokenException refreshTokenException) {
       refreshTokenException.sendResponseError(response);
@@ -108,5 +148,20 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
     }
 
     return null;
+  }
+
+  private void sendTokens(String accessTokenValue, String refreshTokenValue, HttpServletResponse response) {
+
+    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+    Gson gson = new Gson();
+
+    String jsonStr = gson.toJson(Map.of("accessToken", accessTokenValue, "RefreshToken", refreshTokenValue));
+
+    try {
+      response.getWriter().println(jsonStr);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 }
