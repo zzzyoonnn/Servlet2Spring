@@ -99,7 +99,7 @@ public class CustomSecurityConfig {
                             .requestMatchers("/assets/**", "/css/**", "/js/**").permitAll() // bootstrap
                             .requestMatchers("/board/**", "/replies/**", "/view/**", "/upload/**").permitAll()  // board
                             .requestMatchers("/apiLogin.html", "/generateToken", "/refreshTest.html").permitAll()
-                            .requestMatchers("/sample.html").permitAll()
+                            .requestMatchers("/sample.html", "/sendJWT.html").permitAll()
                             .requestMatchers("/api/**").permitAll()
                             .anyRequest().authenticated()   // 그 외 모든 경로는 인증이 필요
 
