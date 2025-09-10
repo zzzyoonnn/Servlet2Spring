@@ -67,7 +67,7 @@ public class CustomSecurityConfig {
     http.authenticationManager(authenticationManager);
 
     // APILoginFilter
-    APILoginFilter apiLoginFilter = new APILoginFilter("/generateToken");
+    APILoginFilter apiLoginFilter = new APILoginFilter("/tokens/generateToken");
     apiLoginFilter.setAuthenticationManager(authenticationManager);
 
     // APISuccessHandler
@@ -80,7 +80,7 @@ public class CustomSecurityConfig {
     http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
     // refreshToken 호출 처리
-    http.addFilterBefore(new RefreshTokenFilter("/refreshToken", jwtUtil), TokenCheckFilter.class);
+    http.addFilterBefore(new RefreshTokenFilter("/tokens/refreshToken", jwtUtil), TokenCheckFilter.class);
 
     http
 
@@ -89,9 +89,6 @@ public class CustomSecurityConfig {
 
             // CORS 설정 적용
             .cors(config -> config.configurationSource(corsConfigurationSource()))
-//            .cors(httpSecurityCorsConfigurer -> {
-//              httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());
-//            })
 
             // 세션을 사용하지 않도록 설정 (STATELESS)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

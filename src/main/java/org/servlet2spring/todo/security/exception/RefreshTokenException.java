@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.ErrorResponse;
 
 public class RefreshTokenException extends RuntimeException {
 

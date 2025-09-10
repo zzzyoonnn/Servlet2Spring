@@ -65,7 +65,6 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
       // 새로운 Access Token 발행
 
       // Refresh Token의 유효 시간이 얼마 남지 않은 경우
-//      Integer exp = (Integer)refreshClaims.get("exp");
       Long expLong = (Long) refreshClaims.get("exp");
       Integer exp = expLong.intValue();
 
