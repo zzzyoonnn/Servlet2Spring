@@ -11,9 +11,13 @@ import java.io.IOException;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.servlet2spring.todo.security.APIUserDetailsService;
 import org.servlet2spring.todo.security.exception.AccessTokenException;
 import org.servlet2spring.todo.security.exception.AccessTokenException.TOKEN_ERROR;
 import org.servlet2spring.todo.util.JWTUtil;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Log4j2
@@ -21,6 +25,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class TokenCheckFilter extends OncePerRequestFilter {
 
   private final JWTUtil jwtUtil;
+  private final APIUserDetailsService apiUserDetailsService;
 
   private Map<String, Object> validateAccessToken(HttpServletRequest request) throws AccessTokenException {
     String headerStr = request.getHeader("Authorization");
@@ -67,7 +72,22 @@ public class TokenCheckFilter extends OncePerRequestFilter {
     log.info("JWTUtil: " + jwtUtil.toString());
 
     try {
-      validateAccessToken(request);
+      Map<String, Object> payload = validateAccessToken(request);
+
+      // mid
+      String mid = (String) payload.get("mid");
+
+      log.info("mid: " + mid);
+
+      // 사용자 정보 로드
+      UserDetails userDetails = apiUserDetailsService.loadUserByUsername(mid);
+
+      // Authentication 객체 생성
+      UsernamePasswordAuthenticationToken authenticationToken =
+              new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+      SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
       filterChain.doFilter(request, response);
     } catch (AccessTokenException e) {
       e.sendResponseError(response);

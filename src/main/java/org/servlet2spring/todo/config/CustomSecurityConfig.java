@@ -17,6 +17,7 @@ import org.springframework.security.access.expression.method.MethodSecurityExpre
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -33,7 +34,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true) // prePostEnabled's default = true
 public class CustomSecurityConfig {
 
   // 주입
@@ -75,9 +76,10 @@ public class CustomSecurityConfig {
     apiLoginFilter.setAuthenticationSuccessHandler(successHandler); // SuccessHandler 세팅
 
     // APILoginFilter 위치 조정
-    // api로 시작하는 모든 경로는 TokenCheckFilter 동작
     http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
-    http.addFilterBefore(tokenCheckFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
+    // api로 시작하는 모든 경로는 TokenCheckFilter 동작
+    http.addFilterBefore(tokenCheckFilter(jwtUtil, apiUserDetailsService), UsernamePasswordAuthenticationFilter.class);
 
     // refreshToken 호출 처리
     http.addFilterBefore(new RefreshTokenFilter("/tokens/refreshToken", jwtUtil), TokenCheckFilter.class);
@@ -112,8 +114,8 @@ public class CustomSecurityConfig {
     return new DefaultMethodSecurityExpressionHandler();
   }
 
-  private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil) {
-    return new TokenCheckFilter(jwtUtil);
+  private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil, APIUserDetailsService apiUserDetailsService) {
+    return new TokenCheckFilter(jwtUtil, apiUserDetailsService);
   }
 
   // CORS 설정
