@@ -46,6 +46,7 @@ public class CustomSecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
+  // 정적 자원 처리
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer() {
     log.info("---------- web config ----------");
@@ -98,7 +99,7 @@ public class CustomSecurityConfig {
             // URL 별 접근 권한 설정
             .authorizeHttpRequests(auth ->
                     auth.requestMatchers("/error", "/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                            .requestMatchers("/assets/**", "/css/**", "/js/**").permitAll() // bootstrap
+                            //.requestMatchers("/assets/**", "/css/**", "/js/**").permitAll() // bootstrap
                             .requestMatchers("/board/**", "/replies/**", "/view/**", "/upload/**").permitAll()  // board
                             .requestMatchers("/tokens/**").permitAll()
                             .requestMatchers("/api/**").permitAll()
