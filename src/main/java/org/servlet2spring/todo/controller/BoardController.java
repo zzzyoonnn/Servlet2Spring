@@ -15,6 +15,7 @@ import org.servlet2spring.todo.service.BoardService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,17 +37,15 @@ public class BoardController {
   // 목록 기능
   @GetMapping("/list")
   public void list(PageRequestDTO pageRequestDTO, Model model) {
-    // PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
-//    PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
     PageResponseDTO<BoardListAllDTO> responseDTO = boardService.listWithAll(pageRequestDTO);
     log.info(responseDTO);
     model.addAttribute("responseDTO", responseDTO);
   }
 
   // 등록 기능
+  @PreAuthorize("hasRole('USER')")
   @GetMapping("/register")
   public void registerGet() {
-
   }
 
   //  @ResponseBody
@@ -79,7 +78,6 @@ public class BoardController {
   }
 
   // 수정 기능
-//  @ResponseBody
   @PostMapping("/modify")
   public String modify(PageRequestDTO pageRequestDTO, @Valid BoardDTO boardDTO, BindingResult bindingResult,
                        RedirectAttributes redirectAttributes) {
@@ -101,7 +99,6 @@ public class BoardController {
   }
 
   // 삭제 기능
-//  @ResponseBody
   @PostMapping("/remove")
   public String remove(BoardDTO boardDTO, RedirectAttributes redirectAttributes) {
     Long bno = boardDTO.getBno();
