@@ -29,7 +29,10 @@ public class CustomSecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     log.info("--------------- configure ---------------");
 
-    http.formLogin(withDefaults());
+    //http.formLogin(withDefaults()).loginPage("/member/login");
+    http.formLogin(form -> form.loginPage("/member/login"));
+
+    http.csrf(config -> config.disable());
 
     return http.build();
   }
