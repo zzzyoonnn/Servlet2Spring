@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/basic.html}">
 <head>
     <meta charset="UTF-8">
@@ -86,6 +87,13 @@
 </div> <!-- layout fragment end -->
 
 <script layout:fragment="script" th:inline="javascript">
+
+    const auth = /*[[${#authentication}]]*/ null;
+    console.log("Authentication object:", auth);
+
+    const username = /*[[${#authentication.name}]]*/ 'anonymous';
+    console.log("Logged-in username:", username);
+
     const errors = [[${errors}]]
     console.log(errors)
 
