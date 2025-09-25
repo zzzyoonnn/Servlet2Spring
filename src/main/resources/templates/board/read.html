@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/basic.html}">
 <head>
     <meta charset="UTF-8">
@@ -47,26 +48,20 @@
                                th:value="${#temporals.format(dto.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
                     </div>
 
-                    <div class="my-4">
+                    <div class="my-4" th:with="user=${#authentication.principal}">
                         <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
                             <a th:href="|@{/board/list}?${link}|" class="text-decoration-none">
                                 <button type="button" class="btn btn-primary">List</button>
                             </a>
 
-                            <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="text-decoration-none">
+                            <a th:if="${user != null && user.username == dto.writer}"
+                               th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="text-decoration-none">
                                 <button type="button" class="btn btn-secondary">Modify</button>
                             </a>
                         </div>
                     </div>
                 </div><!-- end card body -->
 
-                <!--
-                <div class="col">
-                    <div class="card" th:if="${dto.fileNames != null && dto.fileNames.size() > 0}">
-                        <img class="card-img-top" style="width:300px" th:each="fileName: ${dto.fileNames}" th:src="|/view/${fileName}|">
-                    </div>
-                </div>
-                -->
                 <div class="row">
                     <div class="col-md-4 col-sm-6 mb-3"
                          th:each="fileName : ${dto.fileNames}">
@@ -107,9 +102,9 @@
                         <span class="input-group-text">Reply Text</span>
                         <input type="text" class="form-control modalReplyText">
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" th:with="user=${#authentication.principal}">
                         <span class="input-group-text">Replier</span>
-                        <input type="text" class="form-control modalReplier">
+                        <input type="text" class="form-control replier" th:value="${user.username}" readonly>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -147,13 +142,10 @@
 </div><!-- end layout fragment -->
 
 <script layout:fragment="script" th:inline="javascript">
-    const bno = [[${dto.bno}]];
 
-    // get1(bno).then(data => {
-    //     console.log(data);
-    // }).catch(e => {
-    //     console.error(e);
-    // })
+    const currentUser = [[${#authentication.principal.username}]]
+
+    const bno = [[${dto.bno}]];
 
     const replyList = document.querySelector('.replyList')  // 댓글 목록 DOM
 
@@ -219,9 +211,8 @@
 
     function printReplies(page, size, goLast) {
         getList({bno, page, size, goLast}).then(
-            // data => {console.log(data)}
             data => {
-                console.log("getList data", data) // 여기도 찍어보세요
+                console.log("getList data", data)
                 printList(data.dtoList) // 목록 처리
                 printPages(data)    // 페이지 처리
             }
@@ -281,6 +272,8 @@
     const removeBtn = document.querySelector(".removeBtn")
     const closeModifyBtn = document.querySelector(".closeModifyBtn")
 
+    let hasAuth = false // 댓글 작성자와 currentUser의 일치 여부
+
     replyList.addEventListener("click", function (e){
         e.preventDefault()
         e.stopPropagation()
@@ -302,11 +295,22 @@
             replyHeader.innerHTML = reply.rno
             modifyText.value = reply.replyText
             modifyModal.show()
+
+            // 댓글의 작성자와 현재 사용자 일치 여부 확인
+            hasAuth = currentUser === reply.replier
+
         }).catch(e => alert('error'))
     }, false)
 
     // 댓글 수정
     modifyBtn.addEventListener("click", function(e) {
+
+        if(!hasAuth) {
+            alert("댓글 작성자만 수정 가능합니다.")
+            modifyModal.hide()
+            return
+        }
+
         const replyObj = {
             bno:bno,
             rno:replyHeader.innerHTML,
@@ -330,6 +334,13 @@
 
     // 댓글 삭제
     removeBtn.addEventListener("click", function(e) {
+
+        if(!hasAuth) {
+            alert("댓글 작성자만 삭제 가능합니다.")
+            modifyModal.hide()
+            return
+        }
+
         removeReply(replyHeader.innerHTML).then(result => {
             alert(result.rno + ` 댓글이 삭제되었습니다.`)
             modifyText.value = ''
