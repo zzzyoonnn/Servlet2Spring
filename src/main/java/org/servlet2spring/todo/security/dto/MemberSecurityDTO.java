@@ -1,4 +1,4 @@
-package org.servlet2spring.todo.dto;
+package org.servlet2spring.todo.security.dto;
 
 import java.util.Collection;
 import lombok.Getter;
