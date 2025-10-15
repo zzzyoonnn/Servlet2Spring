@@ -3,6 +3,7 @@ package org.servlet2spring.todo.util;
 import java.io.File;
 import java.net.URL;
 import java.time.Duration;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
 @Log4j2
+@Getter
 @Component
 @RequiredArgsConstructor
 public class S3Uploader {
@@ -50,7 +52,7 @@ public class S3Uploader {
   }
 
   // presigned URL 생성 (다운로드 가능한 링크)
-  private String getFileUrl(String fileName) {
+  public String getFileUrl(String fileName) {
     GetObjectRequest getObjectRequest = GetObjectRequest.builder()
             .bucket(bucket)
             .key(fileName)

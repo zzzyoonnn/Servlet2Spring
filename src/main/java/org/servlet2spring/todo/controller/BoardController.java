@@ -2,7 +2,6 @@ package org.servlet2spring.todo.controller;
 
 import jakarta.validation.Valid;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,7 @@ import org.servlet2spring.todo.dto.BoardListAllDTO;
 import org.servlet2spring.todo.dto.PageRequestDTO;
 import org.servlet2spring.todo.dto.PageResponseDTO;
 import org.servlet2spring.todo.service.BoardService;
-import org.springframework.beans.factory.annotation.Value;
+import org.servlet2spring.todo.util.LocalUploader;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,8 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/board")
 public class BoardController {
 
-  @Value("${org.servlet2spring.upload.path}")
-  private String uploadPath;
+  private final LocalUploader localUploader;
   private final BoardService boardService;
 
   // 목록 기능
@@ -121,7 +119,7 @@ public class BoardController {
 
   public void removeFiles(List<String> files) {
     for (String fileName : files) {
-      Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+      Resource resource = new FileSystemResource(localUploader.getUploadPath() + File.separator + fileName);
 
       String resourceName = resource.getFilename();
 

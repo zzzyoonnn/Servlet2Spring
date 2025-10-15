@@ -10,7 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 public class UploadFileDTO {
 
-  @Schema(type = "string", format = "binary")
-  private List<MultipartFile> files;
+//  @Schema(type = "string", format = "binary")
+//  private List<MultipartFile> files;
+
+  private MultipartFile[] files;
 
 }
