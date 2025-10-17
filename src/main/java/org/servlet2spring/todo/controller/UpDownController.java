@@ -35,91 +35,79 @@ public class UpDownController {
   private final LocalUploader localUploader;
   private final S3Uploader s3Uploader;
 
-  // 파일 업로드
+  // 파일 업로드 - S3 URL 직접 반환
   @Operation(summary = "Upload POST", description = "POST 방식으로 파일 등록")
   @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  public List<String> upload(UploadFileDTO uploadFileDTO) {
+  public List<Map<String, String>> upload(UploadFileDTO uploadFileDTO) {
 
     MultipartFile[] files = uploadFileDTO.getFiles();
-
     log.info("Uploaded files: {}", files);
 
     if (files == null || files.length <= 0) {
       return null;
     }
 
-    List<String> uploadedFilePaths = new ArrayList<>();
+    List<Map<String, String>> uploadResults = new ArrayList<>();
 
     for (MultipartFile file : files) {
-      uploadedFilePaths.addAll(localUploader.uploadLocal(file));
+      // 로컬에 임시 저장
+      List<String> uploadedFilePaths = localUploader.uploadLocal(file);
+
+      for (String filePath : uploadedFilePaths) {
+        // S3에 업로드하고 URL 받기
+        String s3Url = s3Uploader.upload(filePath);
+
+        // 파일명 추출 (uuid_원본파일명)
+        String fileName = new File(filePath).getName();
+        String uuid = fileName.substring(0, fileName.indexOf("_"));
+        String originalName = fileName.substring(fileName.indexOf("_") + 1);
+
+        Map<String, String> fileInfo = new HashMap<>();
+        fileInfo.put("uuid", uuid);
+        fileInfo.put("fileName", originalName);
+        fileInfo.put("link", s3Url);  // S3 presigned URL 직접 사용
+
+        uploadResults.add(fileInfo);
+      }
     }
 
-    log.info("--------------------");
-    log.info(uploadedFilePaths);
-
-    List<String> s3Paths = uploadedFilePaths.stream().map(fileName -> s3Uploader.upload(fileName))
-            .collect(Collectors.toList());
-
-    return s3Paths;
+    log.info("Upload results: {}", uploadResults);
+    return uploadResults;
   }
 
-  // 첨부파일 조회
   @Operation(summary = "첨부파일 조회", description = "GET 방식으로 첨부파일 조회")
   @GetMapping("/view/{fileName}")
   public ResponseEntity<Void> viewFileGET(@PathVariable String fileName) {
-//    String presignedUrl = 3Uploader.getFileUrl(fileName); // Presigned URL 생성
-//
-//    HttpHeaders headers = new HttpHeaders();
-//    headers.add(HttpHeaders.LOCATION, presignedUrl);
-//
-//    // 브라우저에게 S3 URL로 다시 요청하라고 명령 (302 Found)
-//    return new ResponseEntity<>(headers, HttpStatus.FOUND);
-//  }
-//  public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName) {
-//    Resource resource = new FileSystemResource(s3Uploader.getFileUrl(fileName));
-//    log.info("경로: " + resource.getFilename());
-//    HttpHeaders headers = new HttpHeaders();
-//
-//    try {
-//      headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
-//
-//    } catch (IOException e) {
-//      return ResponseEntity.internalServerError().build();
-//    }
-////  }
-////
-//    return ResponseEntity.ok().headers(headers).body(resource);
-//  }
-    // 1. S3Uploader를 사용하여 Presigned URL 생성 (String 반환)
-    String presignedUrl = s3Uploader.getFileUrl(fileName);
-
-    // 2. HTTP Headers에 Location 설정
-    HttpHeaders headers = new HttpHeaders();
-    headers.add(HttpHeaders.LOCATION, presignedUrl);
-
-    log.info("S3 Presigned URL: " + presignedUrl);
-
-    return new ResponseEntity<>(headers, HttpStatus.FOUND);
+    String fileUrl = s3Uploader.getFileUrl(fileName);
+    return ResponseEntity.status(HttpStatus.FOUND)
+            .header(HttpHeaders.LOCATION, fileUrl)
+            .build();
   }
 
-    // 첨부파일 삭제
-    @Operation(summary = "첨부파일 삭제", description = "DELETE 방식으로 파일 삭제")
-    @DeleteMapping("/remove/{fileName}")
-    public Map<String, Boolean> removeFile (@PathVariable String fileName){
-      Resource resource = new FileSystemResource(localUploader.getUploadPath() + File.separator + fileName);
+  // 첨부파일 삭제 - S3에서도 삭제하도록 수정
+  @Operation(summary = "첨부파일 삭제", description = "DELETE 방식으로 파일 삭제")
+  @DeleteMapping("/remove/{fileName}")
+  public Map<String, Boolean> removeFile(@PathVariable String fileName) {
+    Map<String, Boolean> resultMap = new HashMap<>();
+    boolean removed = false;
 
-      Map<String, Boolean> resultMap = new HashMap<>();
-      boolean removed = false;
+    try {
+      // S3에서 삭제
+      s3Uploader.removeS3File(fileName);
 
-      try {
-        removed = resource.getFile().delete();
-
-      } catch (IOException e) {
-        log.error(e.getMessage());
+      // 로컬 파일도 삭제 시도 (이미 삭제되었을 수 있음)
+      Resource resource = new FileSystemResource(
+              localUploader.getUploadPath() + File.separator + fileName);
+      if (resource.exists()) {
+        resource.getFile().delete();
       }
 
-      resultMap.put("result", removed);
-
-      return resultMap;
+      removed = true;
+    } catch (Exception e) {
+      log.error("Error removing file: {}", e.getMessage());
     }
+
+    resultMap.put("result", removed);
+    return resultMap;
   }
+}
