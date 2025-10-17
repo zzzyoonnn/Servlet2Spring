@@ -234,15 +234,23 @@
     const uploadResult = document.querySelector(".uploadResult")
 
     function showUploadFile({uuid, fileName, link}) {
+        console.log("showUploadFile - S3 URL:", link);
+
+        // S3 URL은 이미 전체 경로이므로 '/view/' 접두사 제거
+        const imageUrl = link;
+
+        // removeFile 함수에 전달할 파일 이름 조합 (서버에서 이 형태로 처리할 경우)
+        const uuidFileName = uuid + "_" + fileName;
+
         const str = `<div class="card col-4">
 <div class="card-header d-flex justify-content-center">
-${fileName}
+${uuidFileName}
 <button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}', '${fileName}', this)">X</button>
 </div>
 <div class="card-body">
-<img src="/view/${link}" data-src="${uuid+"_"+fileName}" style="width:300px">
+<img src="${imageUrl}" data-src="${uuidFileName}" style="width:300px; display: block; object-fit: contain;">
 </div>
-</div><!-- card -->`
+</div>`
 
         uploadResult.innerHTML += str
     }
