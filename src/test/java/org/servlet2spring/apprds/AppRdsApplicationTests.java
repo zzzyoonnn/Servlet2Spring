@@ -1,6 +1,5 @@
 package org.servlet2spring.apprds;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

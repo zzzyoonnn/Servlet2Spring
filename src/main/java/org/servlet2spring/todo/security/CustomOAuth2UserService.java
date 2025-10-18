@@ -43,11 +43,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     OAuth2User oAuth2User = super.loadUser(userRequest);
     Map<String, Object> paramMap = oAuth2User.getAttributes();
 
-//    paramMap.forEach((key, value) -> {
-//      log.info("--------------------");
-//      log.info("key: " + key + ", value: " + value);
-//    });
-
     String email = null;
 
     switch (clientName) {

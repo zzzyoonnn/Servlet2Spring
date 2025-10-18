@@ -1,6 +1,5 @@
 package org.servlet2spring.todo.domain;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

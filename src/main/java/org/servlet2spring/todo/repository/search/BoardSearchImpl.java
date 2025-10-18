@@ -4,7 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.servlet2spring.todo.domain.Board;

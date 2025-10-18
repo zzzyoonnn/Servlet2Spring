@@ -79,33 +79,6 @@ public class UpDownController {
             .build();
   }
 
-  // 첨부파일 삭제 - S3에서도 삭제하도록 수정
-//  @Operation(summary = "첨부파일 삭제", description = "DELETE 방식으로 파일 삭제")
-//  @DeleteMapping("/remove/{fileName}")
-//  public Map<String, Boolean> removeFile(@PathVariable String fileName) {
-//    Map<String, Boolean> resultMap = new HashMap<>();
-//    boolean removed = false;
-//
-//    try {
-//      // S3에서 삭제
-//      s3Uploader.removeS3File(fileName);
-//
-//      // 로컬 파일도 삭제 시도 (이미 삭제되었을 수 있음)
-//      Resource resource = new FileSystemResource(
-//              localUploader.getUploadPath() + File.separator + fileName);
-//      if (resource.exists()) {
-//        resource.getFile().delete();
-//      }
-//
-//      removed = true;
-//    } catch (Exception e) {
-//      log.error("Error removing file: {}", e.getMessage());
-//    }
-//
-//    resultMap.put("result", removed);
-//    return resultMap;
-//  }
-
   @Operation(summary = "첨부파일 삭제", description = "DELETE 방식으로 파일 삭제")
   @DeleteMapping("/remove/{fileName}")
   public Map<String, Boolean> removeFile(@PathVariable String fileName) {

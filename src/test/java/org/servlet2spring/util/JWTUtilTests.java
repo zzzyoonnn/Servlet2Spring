@@ -1,6 +1,5 @@
 package org.servlet2spring.util;
 
-import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
