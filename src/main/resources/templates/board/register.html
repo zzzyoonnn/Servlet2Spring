@@ -128,10 +128,11 @@
         console.log(uuid)
         console.log(fileName)
         console.log(obj)
+        const fullFileName = uuid + "_" + fileName;
 
         const targetDiv = obj.closest(".card")
 
-        removeFileToServer(uuid, fileName).then(data => {
+        removeFileToServer(fullFileName).then(data => {
             targetDiv.remove()
         })
     }
