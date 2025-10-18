@@ -39,7 +39,7 @@ public class CustomSecurityConfig {
     log.info("--------------- configure ---------------");
 
     // 커스텀 로그인 페이지
-    http.formLogin(form -> form.loginPage("/member/login"));
+    http.formLogin(form -> form.loginPage("/member/login").defaultSuccessUrl("/board/list", true));
 
     // CSRF 토큰 비활성화
     http.csrf(config -> config.disable());
