@@ -28,17 +28,7 @@ Servlet/JSP로 시작한 웹 애플리케이션을 Spring MVC와 Spring Boot로 
 
 ## 시스템 아키텍처
 
-```mermaid
-flowchart LR
-    Client["Browser / API Client"] --> Security["Spring Security"]
-    Security --> Controller["MVC / REST Controller"]
-    Controller --> Service["Service"]
-    Service --> Repository["JPA Repository / Querydsl"]
-    Repository --> MySQL[("MySQL / RDS")]
-    Controller --> Uploader["File Upload"]
-    Uploader --> S3[("AWS S3")]
-    OAuth["Kakao OAuth2"] --> Security
-```
+![Servlet2Spring 시스템 아키텍처](docs/images/system-architecture.svg)
 
 ```text
 src/main/java/org/servlet2spring
